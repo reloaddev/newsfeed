@@ -1,5 +1,15 @@
 <div class="spacer"></div>
-<div id="wrapper">
-  <p>Feed</p>
+<div class="feed-section">
+  <div *ngFor="let post of posts">
+    <div class="post">
+      <div class="user">(x)</div>
+      <div class="timestamp"></div>
+      <div class="post-text">{{ post }}</div>
+    </div>
+  </div>
 </div>
-<div class="spacer"></div>
+<div class="spacer">
+  <button (click)="createPost()">PUSH</button>
+  <button (click)="removeLastPost()">REMOVE</button>
+  <button (click)="removeAll()">RemoveALL</button>
+</div>

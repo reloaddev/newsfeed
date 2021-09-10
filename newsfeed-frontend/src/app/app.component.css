@@ -1,14 +1,14 @@
 .wrapper {
   flex: 1;
   background-color: cadetblue;
-  overflow: auto;
+  overflow: hidden;
 }
 
 app-feed {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 100vh;
+  height: 100%;
 }
 
 header {
@@ -16,9 +16,4 @@ header {
   background-color: steelblue;
   text-align: center;
   font-size: 2rem;
-}
-
-footer {
-  min-height: 80px;
-  background: steelblue;
 }
