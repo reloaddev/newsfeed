@@ -1,0 +1,24 @@
+.wrapper {
+  flex: 1;
+  background-color: cadetblue;
+  overflow: auto;
+}
+
+app-feed {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100vh;
+}
+
+header {
+  min-height: 80px;
+  background-color: steelblue;
+  text-align: center;
+  font-size: 2rem;
+}
+
+footer {
+  min-height: 80px;
+  background: steelblue;
+}

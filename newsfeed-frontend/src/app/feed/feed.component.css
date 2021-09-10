@@ -1,0 +1,9 @@
+#wrapper {
+  flex: 3;
+  background-color: lightblue;
+  text-align: center;
+}
+
+.spacer {
+  flex: 1;
+}
