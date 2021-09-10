@@ -2,9 +2,12 @@
 <div class="feed-section">
   <div *ngFor="let post of posts">
     <div class="post">
-      <div class="user">(x)</div>
-      <div class="timestamp"></div>
+      <div class="user">HP</div>
+      <div class="timestamp">15:55, August 12</div>
       <div class="post-text">{{ post }}</div>
+      <div class="comment">
+        <button mat-raised-button>Comment</button>
+      </div>
     </div>
   </div>
 </div>
