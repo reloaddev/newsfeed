@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FeedService} from "../services/feed.service";
 
 @Component({
   selector: 'app-feed',
@@ -7,21 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeedComponent implements OnInit {
 
-  posts: string[] = [
-    'Then on it there are placed two divs: "bottom" and "right" which have height and width of your wish. I set up background red to show in more understandable way how it works. bla bla bla.',
-    'Then on it there are placed two divs: "bottom" and "right" which have height and width of your wish. I set up background red to show in more understandable way how it works.',
-    'Ob du jetzt hier bist oder in China fällt ein Sack Reis um',
-    'Morgenstund hat Gold im Mund',
-    'Der frühe Vogel fängt den Wurm',
-    'Post 5 ist ein nicer Post',
-    'Post 6 ist kein nicer Post'
-  ]
-
+  posts!: string[];
   index = 0;
 
-  constructor() { }
+  constructor(private feedService: FeedService) { }
 
   ngOnInit(): void {
+    this.feedService.query().subscribe(x => this.posts = x);
   }
 
   createPost() {
