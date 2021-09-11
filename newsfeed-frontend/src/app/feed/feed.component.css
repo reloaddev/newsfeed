@@ -1,0 +1,64 @@
+.feed-section {
+  flex: 3;
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-right: 0.2rem;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: 1fr 1fr 10fr 3fr;
+  grid-template-rows: 1.5fr 3fr 2fr;
+  grid-template-areas:
+    "top1 top2 top3 top4"
+    "mid1 mid2 mid3 mid4"
+    "bot1 bot1 bot3 bot4";
+  width: 100%;
+  height: 8rem;
+  margin: 0 0 5px 0;
+  border: 2px solid black;
+}
+
+.user {
+  grid-area: top1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: black;
+  color: white;
+}
+
+.post-text {
+  grid-area: mid3;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  font-size: 1rem;
+  text-align: left;
+  overflow: auto;
+}
+
+.timestamp {
+  grid-area: top4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: right;
+  margin-right: 0.2rem;
+}
+
+.comment {
+  grid-area: bot1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.spacer {
+  flex: 1;
+  background-color: lightgrey;
+}
+

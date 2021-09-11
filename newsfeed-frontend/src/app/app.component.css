@@ -1,0 +1,22 @@
+.wrapper {
+  flex: 1;
+  overflow: hidden;
+}
+
+app-feed {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100%;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-direction: column;
+  min-height: 5rem;
+  background-color: steelblue;
+  text-align: center;
+  font-size: 2rem;
+}

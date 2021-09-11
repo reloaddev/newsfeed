@@ -1,0 +1,18 @@
+<div class="spacer"></div>
+<div class="feed-section">
+  <div *ngFor="let post of posts">
+    <div class="post">
+      <div class="user">HP</div>
+      <div class="timestamp">15:55, August 12</div>
+      <div class="post-text">{{ post }}</div>
+      <div class="comment">
+        <button mat-raised-button>Comment</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spacer">
+  <button (click)="createPost()">PUSH</button>
+  <button (click)="removeLastPost()">REMOVE</button>
+  <button (click)="removeAll()">RemoveALL</button>
+</div>
