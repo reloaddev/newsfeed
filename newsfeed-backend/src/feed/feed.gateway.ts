@@ -9,9 +9,12 @@ import {
 } from "@nestjs/websockets";
 import {Server} from "socket.io";
 import {from, Observable, of} from "rxjs";
+import {FeedService} from "./schemas/feed.service";
 
 @WebSocketGateway(8081, { namespace: 'feed' })
 export class FeedGateway implements OnGatewayInit, OnGatewayConnection {
+
+    constructor(private feedService: FeedService) {}
 
     private posts = [
         'Then on it there are placed two divs: "bottom" and right which have height and width of your wish. I set up background red to show in more understandable way how it works. bla bla bla.',
@@ -35,6 +38,7 @@ export class FeedGateway implements OnGatewayInit, OnGatewayConnection {
 
     @SubscribeMessage('feed:initialization')
     onFeedInitialization(): string[] {
+        this.feedService.findAll().then(result => console.log(result));
         return this.posts;
     }
 
