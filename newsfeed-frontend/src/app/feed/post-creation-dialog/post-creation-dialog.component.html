@@ -1,1 +1,22 @@
-<p>post-creation-dialog works!</p>
+<h1 mat-dialog-title>What's up?</h1>
+<div class="post-input-area" mat-dialog-content>
+  <p>Tell the world...</p>
+  <mat-form-field class="post-input-field" appearance="fill">
+    <mat-label>New post</mat-label>
+    <textarea
+      #postInputTextarea
+      class="post-input-textarea"
+      matNativeControl
+      [(ngModel)]="post"
+      maxlength="150">
+    </textarea>
+    <div>
+      {{ postInputTextarea.value.length }} / 150 characters
+    </div>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onCloseClick()">Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="post" cdkFocusInitial>Okay</button>
+</div>
+

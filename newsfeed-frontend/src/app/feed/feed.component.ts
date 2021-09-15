@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FeedService} from "../services/feed.service";
+import {MatDialog} from "@angular/material/dialog";
+import {PostCreationDialogComponent} from "./post-creation-dialog/post-creation-dialog.component";
 
 @Component({
   selector: 'app-feed',
@@ -8,22 +10,27 @@ import {FeedService} from "../services/feed.service";
 })
 export class FeedComponent implements OnInit {
 
-  posts!: string[];
-  index = 0;
+  post: string = '';
+  posts: string[] = this.feedService.posts;
 
-  constructor(private feedService: FeedService) { }
+  constructor(public dialog: MatDialog,
+              private feedService: FeedService) { }
 
   ngOnInit(): void {
-    this.feedService.query().subscribe(x => this.posts = x);
+    this.feedService.connect().subscribe(postings => this.posts.push(...postings));
   }
 
-  createPost() {
-    this.posts.push("NEW ONE " + this.index);
-    this.index++;
-  }
-
-  removeLastPost() {
-    this.posts.pop();
+  openCreateDialog() {
+    const dialogRef = this.dialog.open(PostCreationDialogComponent, {
+      width: '700px',
+      height: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.length > 0) {
+        this.posts.push(result);
+        this.feedService.uploadNewPost(result);
+      }
+    })
   }
 
   removeAll() {
