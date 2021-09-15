@@ -1,4 +1,5 @@
 import {
+    MessageBody,
     OnGatewayConnection,
     OnGatewayInit,
     SubscribeMessage,
@@ -6,11 +7,11 @@ import {
     WebSocketServer,
     WsResponse
 } from "@nestjs/websockets";
-import {Server} from 'ws';
+import {Server} from "socket.io";
+import {from, Observable, of} from "rxjs";
 
-@WebSocketGateway(8080)
+@WebSocketGateway(8081, { namespace: 'feed' })
 export class FeedGateway implements OnGatewayInit, OnGatewayConnection {
-
 
     private posts = [
         'Then on it there are placed two divs: "bottom" and right which have height and width of your wish. I set up background red to show in more understandable way how it works. bla bla bla.',
@@ -32,16 +33,17 @@ export class FeedGateway implements OnGatewayInit, OnGatewayConnection {
         client.send(JSON.stringify(this.posts));
     }
 
-    @SubscribeMessage('newPost')
-    onNewPostEvent(client: any, post: any): WsResponse<string> {
-        this.posts.push(post);
-        return { event: 'newPostUploaded', data: 'Post was uploaded.' };
+    @SubscribeMessage('feed:initialization')
+    onFeedInitialization(): string[] {
+        return this.posts;
     }
 
-    @SubscribeMessage('posts')
-    queryPosts() {
-        return 'Hello World';
+    @SubscribeMessage('feed:new-post')
+    onPostCreation(@MessageBody() post: string): string {
+        this.posts.push(post);
+        return `Post "${post}" was uploaded.`;
     }
+
 
 
 }
