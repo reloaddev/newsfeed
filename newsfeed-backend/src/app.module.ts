@@ -6,7 +6,9 @@ import {MongooseModule} from "@nestjs/mongoose";
 
 @Module({
   imports: [
-      MongooseModule.forRoot('mongodb://localhost/nest'),
+      MongooseModule.forRoot(
+          'mongodb+srv://henrik:newsfeed@newsfeed.7zds0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+      ),
       FeedModule
   ],
   controllers: [AppController],

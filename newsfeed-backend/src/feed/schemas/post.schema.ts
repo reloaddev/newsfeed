@@ -1,15 +1,15 @@
-import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
-import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 
-export type PostDocument = Post & Document;
+export const PostSchema = new mongoose.Schema({
+    id: { type: String, required: true },
+    userId: { type: String, required: true },
+    text: { type: String, required: true },
+    date: { type: Date, required: true }
+});
 
-@Schema()
-export class Post {
-    @Prop()
+export interface Post {
     id: string;
-
-    @Prop()
+    userId: string;
     text: string;
+    date: Date;
 }
-
-export const PostSchema = SchemaFactory.createForClass(Post);
