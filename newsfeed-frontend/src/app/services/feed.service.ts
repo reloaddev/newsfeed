@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {webSocket} from "rxjs/webSocket";
 import {io} from "socket.io-client";
 import {Observable} from "rxjs";
+import {PostModel} from "../model/post.model";
 
 
 @Injectable({
@@ -10,21 +10,18 @@ import {Observable} from "rxjs";
 export class FeedService {
 
   socket = io('ws://localhost:8081/feed');
-  posts: string[] = [];
 
-  connect(): Observable<string[]> {
-    return new Observable<string[]>(observer => {
+  connect(): Observable<PostModel[]> {
+    return new Observable<PostModel[]>(observer => {
       this.socket.on('connect', () => {
-        this.socket.emit('feed:initialization', (recentPosts: string[]) => {
+        this.socket.emit('feed:initialization', (recentPosts: PostModel[]) => {
           observer.next(recentPosts);
         });
       });
     });
   }
 
-  uploadNewPost(newPost: string) {
-    this.socket.emit('feed:new-post', newPost, (confirmation: string) => {
-      console.log(confirmation);
-    });
+  uploadNewPost(newPost: PostModel) {
+    this.socket.emit('feed:new-post', newPost);
   }
 }

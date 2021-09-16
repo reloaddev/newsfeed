@@ -2,9 +2,9 @@
 <div class="feed-section">
   <div *ngFor="let post of posts">
     <div class="post">
-      <div class="user">HP</div>
-      <div class="timestamp">15:55, August 12</div>
-      <div class="post-text">{{ post }}</div>
+      <div class="user">{{ post.userId }}</div>
+      <div class="timestamp">{{ post.date?.toLocaleString() }}</div>
+      <div class="post-text">{{ post.text }}</div>
       <div class="comment">
         <button mat-raised-button>Comment</button>
       </div>
@@ -12,6 +12,5 @@
   </div>
 </div>
 <div class="spacer">
-  <button mat-raised-button (click)="openCreateDialog()">Create New Post</button>
-  <button mat-raised-button (click)="removeAll()">Clear Feed</button>
+  <button class="open-dialog" mat-raised-button (click)="openCreateDialog()">Create New Post</button>
 </div>

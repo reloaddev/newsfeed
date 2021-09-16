@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FeedService} from "../services/feed.service";
 import {MatDialog} from "@angular/material/dialog";
 import {PostCreationDialogComponent} from "./post-creation-dialog/post-creation-dialog.component";
+import {PostModel} from "../model/post.model";
 
 @Component({
   selector: 'app-feed',
@@ -10,14 +11,13 @@ import {PostCreationDialogComponent} from "./post-creation-dialog/post-creation-
 })
 export class FeedComponent implements OnInit {
 
-  post: string = '';
-  posts: string[] = this.feedService.posts;
+  posts: PostModel[] = [];
 
   constructor(public dialog: MatDialog,
               private feedService: FeedService) { }
 
   ngOnInit(): void {
-    this.feedService.connect().subscribe(postings => this.posts.push(...postings));
+    this.feedService.connect().subscribe(postings => this.posts = postings);
   }
 
   openCreateDialog() {
@@ -25,10 +25,10 @@ export class FeedComponent implements OnInit {
       width: '700px',
       height: '400px',
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result && result.length > 0) {
-        this.posts.push(result);
-        this.feedService.uploadNewPost(result);
+    dialogRef.afterClosed().subscribe((createdPost: PostModel) => {
+      if(createdPost && createdPost.text.length > 0) {
+        this.posts.push(createdPost);
+        this.feedService.uploadNewPost(createdPost);
       }
     })
   }

@@ -1,20 +1,40 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from "@angular/material/dialog";
+import {PostModel} from "../../model/post.model";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-post-creation-dialog',
   templateUrl: './post-creation-dialog.component.html',
   styleUrls: ['./post-creation-dialog.component.css']
 })
-export class PostCreationDialogComponent {
+export class PostCreationDialogComponent implements OnInit {
+
+  form!: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<PostCreationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public post: string
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<PostCreationDialogComponent>
   ) {}
 
-  onCloseClick(): void {
-    this.dialogRef.close();
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      postText: ''
+    })
+  }
+
+  submit(form: FormGroup): void {
+    let post = this.createPost(this.form.value.postText);
+    this.dialogRef.close(post);
+  }
+
+  createPost(text: string): PostModel {
+    return {
+      id: '.',
+      userId: 'HP',
+      text: text,
+      date: new Date()
+    }
   }
 
 }
