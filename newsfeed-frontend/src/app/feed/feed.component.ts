@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FeedService} from "../services/feed.service";
 import {MatDialog} from "@angular/material/dialog";
 import {PostCreationDialogComponent} from "./post-creation-dialog/post-creation-dialog.component";
-import {PostModel} from "../model/post.model";
+import {Post} from "../model/post";
 
 @Component({
   selector: 'app-feed',
@@ -11,13 +11,14 @@ import {PostModel} from "../model/post.model";
 })
 export class FeedComponent implements OnInit {
 
-  posts: PostModel[] = [];
+  posts: Post[] = [];
 
   constructor(public dialog: MatDialog,
-              private feedService: FeedService) { }
+              private feedService: FeedService) {
+  }
 
   ngOnInit(): void {
-    this.feedService.connect().subscribe(postings => this.posts = postings);
+    this.feedService.connect().subscribe(posts => this.insertNewPosts(posts));
   }
 
   openCreateDialog() {
@@ -25,15 +26,35 @@ export class FeedComponent implements OnInit {
       width: '700px',
       height: '400px',
     });
-    dialogRef.afterClosed().subscribe((createdPost: PostModel) => {
-      if(createdPost && createdPost.text.length > 0) {
-        this.posts.push(createdPost);
+    dialogRef.afterClosed().subscribe((createdPost: Post) => {
+      if (createdPost && createdPost.text.length > 0) {
         this.feedService.uploadNewPost(createdPost);
       }
     })
   }
 
-  removeAll() {
-    this.posts = [];
+  private insertNewPosts(newPosts: Post[]) {
+    if (this.posts.length === 0) {
+      this.posts.push(...newPosts);
+      return;
+    }
+    this.posts.push(...FeedComponent.filterDuplicatePosts(this.posts, newPosts));
+  }
+
+  private static filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
+    comparePosts.forEach(comparePost => {
+      posts.forEach(post => {
+        if (FeedComponent.isDuplicate(post, comparePost)) {
+          comparePosts = comparePosts.filter(post => post !== comparePost);
+        }
+      });
+    });
+    return comparePosts;
+  }
+
+  private static isDuplicate(post: Post, comparePost: Post): boolean {
+    return post.userId === comparePost.userId &&
+      post.text === comparePost.text &&
+      post.date === post.date;
   }
 }

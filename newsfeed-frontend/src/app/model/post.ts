@@ -1,6 +1,6 @@
-export interface PostModel {
+export interface Post {
   id: string;
   userId: string;
   text: string;
-  date: Date;
+  date: string;
 }

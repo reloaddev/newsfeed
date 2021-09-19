@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {PostModel} from "../../model/post.model";
+import {Post} from "../../model/post";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -28,12 +28,12 @@ export class PostCreationDialogComponent implements OnInit {
     this.dialogRef.close(post);
   }
 
-  createPost(text: string): PostModel {
+  createPost(text: string): Post {
     return {
       id: '.',
       userId: 'HP',
       text: text,
-      date: new Date()
+      date: new Date().toDateString()
     }
   }
 

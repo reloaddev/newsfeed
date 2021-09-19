@@ -3,7 +3,7 @@
   <div *ngFor="let post of posts">
     <div class="post">
       <div class="user">{{ post.userId }}</div>
-      <div class="timestamp">{{ post.date?.toLocaleString() }}</div>
+      <div class="timestamp">{{ post.date }}</div>
       <div class="post-text">{{ post.text }}</div>
       <div class="comment">
         <button mat-raised-button>Comment</button>
