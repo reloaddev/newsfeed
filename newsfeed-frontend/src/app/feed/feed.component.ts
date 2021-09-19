@@ -1,5 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FeedService} from "../services/feed.service";
+import { Component, OnInit } from '@angular/core';
+import { FeedService } from "../services/feed.service";
+import { MatDialog } from "@angular/material/dialog";
+import { PostCreationDialogComponent } from "./post-creation-dialog/post-creation-dialog.component";
+import { Post } from "../model/post";
+import { isEqual } from "lodash";
 
 @Component({
   selector: 'app-feed',
@@ -8,25 +12,44 @@ import {FeedService} from "../services/feed.service";
 })
 export class FeedComponent implements OnInit {
 
-  posts!: string[];
-  index = 0;
+  posts: Post[] = [];
 
-  constructor(private feedService: FeedService) { }
+  constructor(public dialog: MatDialog,
+              private feedService: FeedService) {
+  }
 
   ngOnInit(): void {
-    this.feedService.query().subscribe(x => this.posts = x);
+    this.feedService.connect().subscribe(posts => this.insertNewPosts(posts));
   }
 
-  createPost() {
-    this.posts.push("NEW ONE " + this.index);
-    this.index++;
+  openCreateDialog() {
+    const dialogRef = this.dialog.open(PostCreationDialogComponent, {
+      width: '700px',
+      height: '400px',
+    });
+    dialogRef.afterClosed().subscribe((createdPost: Post) => {
+      if (createdPost && createdPost.text.length > 0) {
+        this.feedService.uploadNewPost(createdPost);
+      }
+    })
   }
 
-  removeLastPost() {
-    this.posts.pop();
+  private insertNewPosts(newPosts: Post[]) {
+    if (this.posts.length === 0) {
+      this.posts.push(...newPosts);
+      return;
+    }
+    this.posts.push(...FeedComponent.filterDuplicatePosts(this.posts, newPosts));
   }
 
-  removeAll() {
-    this.posts = [];
+  private static filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
+    comparePosts.forEach(comparePost => {
+      posts.forEach(post => {
+        if (isEqual(post, comparePost)) {
+          comparePosts = comparePosts.filter(post => post !== comparePost);
+        }
+      });
+    });
+    return comparePosts;
   }
 }

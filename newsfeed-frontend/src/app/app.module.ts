@@ -6,17 +6,28 @@ import { AppComponent } from './app.component';
 import { FeedComponent } from './feed/feed.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import { PostCreationDialogComponent } from './feed/post-creation-dialog/post-creation-dialog.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatDialogModule} from "@angular/material/dialog";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
-    FeedComponent
+    FeedComponent,
+    PostCreationDialogComponent
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        MatButtonModule
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,22 +1,31 @@
-import { Injectable } from '@angular/core';
-import {Observable, of} from "rxjs";
+import {Injectable} from '@angular/core';
+import {io} from "socket.io-client";
+import {Observable} from "rxjs";
+import {Post} from "../model/post";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedService {
 
-  constructor() { }
+  socket = io('ws://localhost:8081/feed');
 
-  query(): Observable<string[]> {
-    return of([
-      'Then on it there are placed two divs: "bottom" and "right" which have height and width of your wish. I set up background red to show in more understandable way how it works. bla bla bla.',
-      'Then on it there are placed two divs: "bottom" and "right" which have height and width of your wish. I set up background red to show in more understandable way how it works.',
-      'Ob du jetzt hier bist oder in China fällt ein Sack Reis um',
-      'Morgenstund hat Gold im Mund',
-      'Der frühe Vogel fängt den Wurm',
-      'Post 5 ist ein nicer Post',
-      'Post 6 ist kein nicer Post'
-    ])
+  connect(): Observable<Post[]> {
+    return new Observable<Post[]>(observer => {
+      this.socket.on('connect', () => {
+        console.log(`Socket Id: ${this.socket.id}`);
+        this.socket.emit('feed:initialization', (recentPosts: Post[]) => {
+          observer.next(recentPosts);
+        });
+      });
+      this.socket.on('feed:new-post', (post: Post) => {
+        observer.next([post]);
+      });
+    });
+  }
+
+  uploadNewPost(newPost: Post) {
+    this.socket.emit('feed:new-post', newPost);
   }
 }

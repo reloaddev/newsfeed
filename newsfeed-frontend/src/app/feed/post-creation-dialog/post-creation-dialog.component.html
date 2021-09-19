@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+  <h1 mat-dialog-title>What's up?</h1>
+  <div class="post-input-area" mat-dialog-content>
+    <p>Tell the world...</p>
+    <mat-form-field class="post-input-field" appearance="fill">
+      <mat-label>New post</mat-label>
+      <textarea
+        #postInputTextarea
+        formControlName="postText"
+        class="post-input-textarea"
+        matNativeControl
+        maxlength="250">
+    </textarea>
+      <div>
+        {{ postInputTextarea.value.length }} / 250 characters
+      </div>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button>Cancel</button>
+    <button mat-raised-button type="submit" mat-dialog-close cdkFocusInitial>
+      Upload Post
+    </button>
+  </div>
+</form>
+
