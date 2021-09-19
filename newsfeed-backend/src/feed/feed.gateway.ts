@@ -1,17 +1,8 @@
-import {
-    MessageBody,
-    OnGatewayConnection,
-    OnGatewayInit,
-    SubscribeMessage,
-    WebSocketGateway,
-    WebSocketServer,
-    WsResponse
-} from "@nestjs/websockets";
+import {MessageBody, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
 import {Server} from "socket.io";
-import {from, Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {FeedService} from "./feed.service";
 import {Post} from "./schemas/post.schema";
-import {PostDto} from "./dto/post.dto";
 
 @WebSocketGateway(8081, { namespace: 'feed' })
 export class FeedGateway implements OnGatewayInit {
@@ -32,10 +23,10 @@ export class FeedGateway implements OnGatewayInit {
     }
 
     @SubscribeMessage('feed:new-post')
-    onPostCreation(@MessageBody() postDto: PostDto): string {
-        console.log(postDto);
-        this.feedService.create(postDto).then(post => console.log(post));
-        return 'PostModel was uploaded.';
+    onPostCreation(@MessageBody() postDraft: Post) {
+        this.feedService.create(postDraft).then(newPost => {
+            this.server.emit('feed:new-post', newPost)
+        });
     }
 
 
