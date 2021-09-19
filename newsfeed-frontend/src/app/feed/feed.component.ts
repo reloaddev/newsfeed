@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FeedService} from "../services/feed.service";
-import {MatDialog} from "@angular/material/dialog";
-import {PostCreationDialogComponent} from "./post-creation-dialog/post-creation-dialog.component";
-import {Post} from "../model/post";
+import { Component, OnInit } from '@angular/core';
+import { FeedService } from "../services/feed.service";
+import { MatDialog } from "@angular/material/dialog";
+import { PostCreationDialogComponent } from "./post-creation-dialog/post-creation-dialog.component";
+import { Post } from "../model/post";
+import { isEqual } from "lodash";
 
 @Component({
   selector: 'app-feed',
@@ -44,17 +45,11 @@ export class FeedComponent implements OnInit {
   private static filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
     comparePosts.forEach(comparePost => {
       posts.forEach(post => {
-        if (FeedComponent.isDuplicate(post, comparePost)) {
+        if (isEqual(post, comparePost)) {
           comparePosts = comparePosts.filter(post => post !== comparePost);
         }
       });
     });
     return comparePosts;
-  }
-
-  private static isDuplicate(post: Post, comparePost: Post): boolean {
-    return post.userId === comparePost.userId &&
-      post.text === comparePost.text &&
-      post.date === post.date;
   }
 }
