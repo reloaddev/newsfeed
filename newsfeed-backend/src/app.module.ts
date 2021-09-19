@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {FeedModule} from "./feed/feed.module";
-import {MongooseModule} from "@nestjs/mongoose";
+import { MongooseModule } from "@nestjs/mongoose";
+import { FeedModule } from "./feed/feed.module";
 
 @Module({
   imports: [

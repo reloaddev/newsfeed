@@ -1,8 +1,8 @@
-import {Module} from "@nestjs/common";
-import {FeedGateway} from "./feed.gateway";
-import {MongooseModule} from "@nestjs/mongoose";
-import {PostSchema} from "./schemas/post.schema";
-import {FeedService} from "./feed.service";
+import { Module } from "@nestjs/common";
+import { FeedGateway } from "./feed.gateway";
+import { MongooseModule } from "@nestjs/mongoose";
+import { PostSchema } from "./schemas/post.schema";
+import { FeedService } from "./feed.service";
 
 @Module({
     imports: [

@@ -1,8 +1,8 @@
-import {MessageBody, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
-import {Server} from "socket.io";
-import {Observable} from "rxjs";
-import {FeedService} from "./feed.service";
-import {Post} from "./schemas/post.schema";
+import { MessageBody, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Server } from "socket.io";
+import { Observable } from "rxjs";
+import { FeedService } from "./feed.service";
+import { Post } from "./schemas/post.schema";
 
 @WebSocketGateway(8081, { namespace: 'feed' })
 export class FeedGateway implements OnGatewayInit {
@@ -28,7 +28,5 @@ export class FeedGateway implements OnGatewayInit {
             this.server.emit('feed:new-post', newPost)
         });
     }
-
-
 
 }
