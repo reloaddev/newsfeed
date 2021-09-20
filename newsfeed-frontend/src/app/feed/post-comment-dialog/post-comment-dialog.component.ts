@@ -19,8 +19,8 @@ export class PostCommentDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PostCommentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) post: Post
   ) {
-  this.post = post;
-}
+    this.post = post;
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -34,8 +34,8 @@ export class PostCommentDialogComponent implements OnInit {
       text: text,
       date: new Date().toLocaleString()
     }
+    console.log(this.post.id);
     this.post.comments?.push(comment);
-    console.log(this.post);
   }
 
   submit(form: FormGroup): void {

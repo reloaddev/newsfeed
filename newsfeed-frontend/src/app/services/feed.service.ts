@@ -22,14 +22,17 @@ export class FeedService {
       this.socket.on('feed:new-post', (post: Post) => {
         observer.next([post]);
       });
+      this.socket.on('feed:update-post', (post: Post) => {
+        observer.next([post]);
+      });
     });
   }
 
-  uploadNewPost(newPost: Post) {
-    this.socket.emit('feed:new-post', newPost);
+  uploadPost(post: Post) {
+    this.socket.emit('feed:new-post', post);
   }
 
   updatePost(post: Post) {
-
+    this.socket.emit('feed:update-post', post);
   }
 }

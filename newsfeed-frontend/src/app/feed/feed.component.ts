@@ -31,7 +31,7 @@ export class FeedComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((createdPost: Post) => {
       if (createdPost && createdPost.text.length > 0) {
-        this.feedService.uploadNewPost(createdPost);
+        this.feedService.uploadPost(createdPost);
       }
     })
   }
@@ -43,7 +43,7 @@ export class FeedComponent implements OnInit {
       data: post
     })
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
-      this.feedService.uploadNewPost(postWithComments);
+      this.feedService.updatePost(postWithComments);
     });
   }
 
