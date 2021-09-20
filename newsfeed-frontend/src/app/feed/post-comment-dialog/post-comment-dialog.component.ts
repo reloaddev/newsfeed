@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Post } from "../../model/post.model";
+import { Comment } from "../../model/comment.model";
 
 @Component({
   selector: 'app-post-comment-dialog',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostCommentDialogComponent implements OnInit {
 
-  constructor() { }
+  form!: FormGroup;
+  post: Post;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<PostCommentDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) post: Post
+  ) {
+  this.post = post;
+}
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      commentText: ''
+    })
+  }
+
+  addComment(text: string) {
+    const comment: Comment = {
+      userId: 'HP',
+      text: text,
+      date: new Date().toLocaleString()
+    }
+    this.post.comments?.push(comment);
+    console.log(this.post);
+  }
+
+  submit(form: FormGroup): void {
+    this.dialogRef.close(this.post);
   }
 
 }

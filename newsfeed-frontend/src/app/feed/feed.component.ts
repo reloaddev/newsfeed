@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FeedService } from "../services/feed.service";
 import { MatDialog } from "@angular/material/dialog";
 import { PostCreationDialogComponent } from "./post-creation-dialog/post-creation-dialog.component";
-import { Post } from "../model/post";
-import { isEqual } from "lodash";
+import { Post } from "../model/post.model";
+import { isEqual, isNil } from "lodash";
+import { PostCommentDialogComponent } from "./post-comment-dialog/post-comment-dialog.component";
+import { Comment } from "../model/comment.model";
 
 @Component({
   selector: 'app-feed',
@@ -32,6 +34,17 @@ export class FeedComponent implements OnInit {
         this.feedService.uploadNewPost(createdPost);
       }
     })
+  }
+
+  openCommentDialog(post: Post) {
+    const dialogRef = this.dialog.open(PostCommentDialogComponent, {
+      width: '70rem',
+      height: '50rem',
+      data: post
+    })
+    dialogRef.afterClosed().subscribe((postWithComments: Post) => {
+      this.feedService.uploadNewPost(postWithComments);
+    });
   }
 
   private insertNewPosts(newPosts: Post[]) {

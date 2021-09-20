@@ -6,7 +6,7 @@
       <div class="timestamp">{{ post.date }}</div>
       <div class="post-text">{{ post.text }}</div>
       <div class="comment">
-        <button mat-raised-button>Comment</button>
+        <button mat-raised-button (click)="openCommentDialog(post)">Comment</button>
       </div>
     </div>
   </div>

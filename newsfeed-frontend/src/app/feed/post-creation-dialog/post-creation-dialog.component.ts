@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
-import {Post} from "../../model/post";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from "@angular/material/dialog";
+import { Post } from "../../model/post.model";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-post-creation-dialog',
@@ -30,10 +30,10 @@ export class PostCreationDialogComponent implements OnInit {
 
   createPost(text: string): Post {
     return {
-      id: '.',
       userId: 'HP',
       text: text,
-      date: new Date().toDateString()
+      date: new Date().toLocaleString(),
+      comments: []
     }
   }
 
