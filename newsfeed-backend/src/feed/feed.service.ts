@@ -6,10 +6,15 @@ import { Post } from "./schemas/post.schema";
 @Injectable()
 export class FeedService {
 
-    constructor(@InjectModel('Post') private postModel: Model<Post>) {}
+    constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
 
     async create(post: Post): Promise<Post> {
-        const createdPost = new this.postModel(post);
+        const createdPost = new this.postModel({
+            userId: post.userId,
+            text: post.text,
+            comments: post.comments,
+            date: post.date
+        });
         return createdPost.save();
     }
 
