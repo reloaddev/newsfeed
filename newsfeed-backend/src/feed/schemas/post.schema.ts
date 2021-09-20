@@ -7,7 +7,7 @@ export interface Comment {
     date: string;
 }
 
-export interface Post extends mongoose.Document {
+export interface Post {
     id: string;
     userId: string;
     text: string;
@@ -27,3 +27,5 @@ export const postSchema = new mongoose.Schema({
     comments: { type: [commentSchema], required: true },
     date: { type: String, required: true }
 });
+
+export type PostDocument = Post & mongoose.Document;

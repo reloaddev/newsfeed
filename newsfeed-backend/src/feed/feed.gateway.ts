@@ -18,15 +18,24 @@ export class FeedGateway implements OnGatewayInit {
     @SubscribeMessage('feed:initialization')
     onFeedInitialization(): Observable<Post[]> {
         return new Observable<Post[]>(observer => {
-            this.feedService.findAll().then(posts => observer.next(posts));
+            this.feedService.getPosts().then(posts => {
+                console.log(posts);
+                observer.next(posts)
+            });
         })
     }
 
     @SubscribeMessage('feed:new-post')
     onPostCreation(@MessageBody() postDraft: Post) {
-        this.feedService.create(postDraft).then(newPost => {
+        this.feedService.createPost(postDraft).then(newPost => {
             this.server.emit('feed:new-post', newPost)
         });
+    }
+
+    @SubscribeMessage('feed:update-post')
+    async onPostUpdate(@MessageBody() post: Post) {
+        const updatedPost = await this.feedService.updatePost(post);
+        this.server.emit('feed:update-post', updatedPost);
     }
 
 }
