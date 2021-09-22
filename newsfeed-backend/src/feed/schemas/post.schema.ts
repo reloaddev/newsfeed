@@ -4,7 +4,7 @@ export interface Comment {
     id: string;
     userId: string;
     text: string;
-    date: string;
+    date: Date;
 }
 
 export interface Post {
@@ -12,20 +12,20 @@ export interface Post {
     userId: string;
     text: string;
     comments: Comment[];
-    date: string;
+    date: Date;
 }
 
 const commentSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     text: { type: String, required: true },
-    date: { type: String, required: true }
+    date: { type: Date, required: true }
 });
 
 export const postSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     text: { type: String, required: true },
     comments: { type: [commentSchema], required: true },
-    date: { type: String, required: true }
+    date: { type: Date, required: true }
 });
 
 export type PostDocument = Post & mongoose.Document;

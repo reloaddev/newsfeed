@@ -19,7 +19,6 @@ export class FeedGateway implements OnGatewayInit {
     onFeedInitialization(): Observable<Post[]> {
         return new Observable<Post[]>(observer => {
             this.feedService.getPosts().then(posts => {
-                console.log(posts);
                 observer.next(posts)
             });
         })
