@@ -60,7 +60,7 @@ export class FeedComponent implements OnInit {
   private filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
     comparePosts.forEach(comparePost => {
       posts.forEach(post => {
-        if (this.isDuplicate(post, comparePost)) {
+        if (post.id === comparePost.id) {
           if(post.comments!.length < comparePost.comments!.length) {
             this.posts = this.posts.filter((p: Post) => p !== post);
             this.posts.push(comparePost);
@@ -70,9 +70,5 @@ export class FeedComponent implements OnInit {
       });
     });
     return comparePosts;
-  }
-
-  private isDuplicate(post: Post, comparePost: Post): boolean {
-    return post.id === comparePost.id;
   }
 }

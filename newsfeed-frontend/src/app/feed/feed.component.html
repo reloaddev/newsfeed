@@ -1,9 +1,9 @@
 <div class="spacer"></div>
 <div class="feed-section">
-  <div *ngFor="let post of posts">
+  <div *ngFor="let post of posts | dateSort">
     <div class="post">
       <div class="user">{{ post.userId }}</div>
-      <div class="timestamp">{{ post.date }}</div>
+      <div class="timestamp">{{ post.date | date: 'dd/MM/yyyy hh:mm:ss' }}</div>
       <div class="post-text">{{ post.text }}</div>
       <div class="comment">
         <button mat-raised-button (click)="openCommentDialog(post)">Comment</button>

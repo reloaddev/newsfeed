@@ -24,7 +24,7 @@
       </div>
     </mat-form-field>
     <div class="comments">
-      <mat-card *ngFor="let comment of post.comments">
+      <mat-card *ngFor="let comment of post.comments | dateSort">
         <mat-card-content>{{ comment.text }}</mat-card-content>
       </mat-card>
     </div>

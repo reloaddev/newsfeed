@@ -32,7 +32,7 @@ export class PostCreationDialogComponent implements OnInit {
     return {
       userId: 'HP',
       text: text,
-      date: new Date().toLocaleString(),
+      date: new Date(),
       comments: []
     }
   }

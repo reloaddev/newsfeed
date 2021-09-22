@@ -14,13 +14,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { PostCommentDialogComponent } from './feed/post-comment-dialog/post-comment-dialog.component';
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
+import { DateSortPipe } from './pipes/date-sort.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     FeedComponent,
     PostCreationDialogComponent,
-    PostCommentDialogComponent
+    PostCommentDialogComponent,
+    DateSortPipe
   ],
   imports: [
     BrowserModule,
