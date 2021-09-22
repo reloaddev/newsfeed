@@ -23,14 +23,14 @@
         </button>
       </div>
     </mat-form-field>
-    <div *ngFor="let comment of post.comments" class="comments">
-      <mat-card>
+    <div class="comments">
+      <mat-card *ngFor="let comment of post.comments">
         <mat-card-content>{{ comment.text }}</mat-card-content>
       </mat-card>
     </div>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="">Cancel</button>
     <button mat-raised-button type="submit" mat-dialog-close cdkFocusInitial>
       Upload Comment
     </button>

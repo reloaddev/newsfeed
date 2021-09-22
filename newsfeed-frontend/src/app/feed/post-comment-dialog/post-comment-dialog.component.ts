@@ -34,11 +34,11 @@ export class PostCommentDialogComponent implements OnInit {
       text: text,
       date: new Date().toLocaleString()
     }
-    console.log(this.post.id);
     this.post.comments?.push(comment);
   }
 
   submit(form: FormGroup): void {
+    this.post
     this.dialogRef.close(this.post);
   }
 

@@ -21,7 +21,7 @@ export class FeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.feedService.connect().subscribe(posts => this.insertNewPosts(posts));
+    this.feedService.connect().subscribe(posts => this.insertPosts(posts));
   }
 
   openCreateDialog() {
@@ -43,26 +43,36 @@ export class FeedComponent implements OnInit {
       data: post
     })
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
-      this.feedService.updatePost(postWithComments);
+      if(postWithComments) {
+        this.feedService.updatePost(postWithComments);
+      }
     });
   }
 
-  private insertNewPosts(newPosts: Post[]) {
+  private insertPosts(newPosts: Post[]) {
     if (this.posts.length === 0) {
       this.posts.push(...newPosts);
       return;
     }
-    this.posts.push(...FeedComponent.filterDuplicatePosts(this.posts, newPosts));
+    this.posts.push(...this.filterDuplicatePosts(this.posts, newPosts));
   }
 
-  private static filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
+  private filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
     comparePosts.forEach(comparePost => {
       posts.forEach(post => {
-        if (isEqual(post, comparePost)) {
-          comparePosts = comparePosts.filter(post => post !== comparePost);
+        if (this.isDuplicate(post, comparePost)) {
+          if(post.comments!.length < comparePost.comments!.length) {
+            this.posts = this.posts.filter((p: Post) => p !== post);
+            this.posts.push(comparePost);
+          }
+          comparePosts = comparePosts.filter(p => p !== comparePost);
         }
       });
     });
     return comparePosts;
+  }
+
+  private isDuplicate(post: Post, comparePost: Post): boolean {
+    return post.id === comparePost.id;
   }
 }
