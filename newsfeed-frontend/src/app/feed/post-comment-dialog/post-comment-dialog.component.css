@@ -1,0 +1,47 @@
+.comment-area {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.comment-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-info {
+  display: flex;
+}
+
+.comment-length-count {
+  flex: 7;
+}
+
+.comment-textarea {
+}
+
+.post {
+  height: 5rem;
+}
+
+.add-comment {
+  flex: 1;
+}
+
+.comments {
+  overflow-y: scroll;
+}
+
+.comment-author {
+  flex: .5;
+}
+
+.comment-text {
+  flex: 5;
+}
+
+.comment-date {
+
+}
+
+

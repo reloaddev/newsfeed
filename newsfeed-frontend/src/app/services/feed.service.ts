@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {io} from "socket.io-client";
 import {Observable} from "rxjs";
-import {Post} from "../model/post";
+import {Post} from "../model/post.model";
 
 
 @Injectable({
@@ -22,10 +22,17 @@ export class FeedService {
       this.socket.on('feed:new-post', (post: Post) => {
         observer.next([post]);
       });
+      this.socket.on('feed:update-post', (post: Post) => {
+        observer.next([post]);
+      });
     });
   }
 
-  uploadNewPost(newPost: Post) {
-    this.socket.emit('feed:new-post', newPost);
+  uploadPost(post: Post) {
+    this.socket.emit('feed:new-post', post);
+  }
+
+  updatePost(post: Post) {
+    this.socket.emit('feed:update-post', post);
   }
 }

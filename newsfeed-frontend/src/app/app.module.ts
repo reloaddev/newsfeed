@@ -11,24 +11,32 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { PostCommentDialogComponent } from './feed/post-comment-dialog/post-comment-dialog.component';
+import { MatCardModule } from "@angular/material/card";
+import { MatIconModule } from "@angular/material/icon";
+import { DateSortPipe } from './pipes/date-sort.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     FeedComponent,
-    PostCreationDialogComponent
+    PostCreationDialogComponent,
+    PostCommentDialogComponent,
+    DateSortPipe
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatIconModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

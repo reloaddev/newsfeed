@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+  <div class="comment-area-2" mat-dialog-content>
+    <mat-card class="post">
+      <mat-card-content class="mat-body-1">
+        {{ post.text }}
+      </mat-card-content>
+    </mat-card>
+    <mat-form-field class="comment-field" appearance="fill">
+      <mat-label>New Comment</mat-label>
+      <textarea
+        #commentTextarea
+        formControlName="commentText"
+        class="comment-textarea"
+        matNativeControl
+        maxlength="300">
+      </textarea>
+      <div class="comment-info">
+        <div class="comment-length-count">
+          {{ commentTextarea.value.length }} / 300 characters
+        </div>
+        <button mat-raised-button type="button" class="add-comment" (click)="addComment(commentTextarea.value)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </mat-form-field>
+    <div class="comments">
+      <mat-card *ngFor="let comment of post.comments | dateSort">
+        <mat-card-content class="comment">
+          <div class="comment-author">{{ comment.userId }}</div>
+          <div class="comment-text">{{ comment.text }}</div>
+          <div class="comment-date">{{ comment.date | date: 'dd/MM/yyyy hh:mm:ss' }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="">Cancel</button>
+    <button mat-raised-button type="submit" mat-dialog-close cdkFocusInitial>
+      Upload Comment
+    </button>
+  </div>
+</form>
