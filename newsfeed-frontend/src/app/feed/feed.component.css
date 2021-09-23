@@ -1,5 +1,5 @@
 .feed-section {
-  flex: 3;
+  flex: 6;
   text-align: center;
   overflow-y: auto;
   overflow-x: hidden;
@@ -10,7 +10,7 @@
 
 .post {
   display: grid;
-  grid-template-columns: 1fr 1fr 10fr 3fr;
+  grid-template-columns: 1fr 2fr 10fr 3fr;
   grid-template-rows: 1.5fr 3fr 2fr;
   grid-template-areas:
     "top1 top2 top3 top4"
@@ -20,6 +20,8 @@
   height: 8rem;
   margin: 0 0 5px 0;
   border: 2px solid black;
+  min-height: 0;
+  min-width: 0;
 }
 
 .user {
@@ -29,6 +31,8 @@
   flex-direction: column;
   background-color: black;
   color: white;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .post-text {
@@ -38,7 +42,8 @@
   align-content: flex-start;
   font-size: 1rem;
   text-align: left;
-  overflow: auto;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .timestamp {
@@ -48,13 +53,27 @@
   justify-content: center;
   text-align: right;
   margin-right: 0.2rem;
+  overflow: hidden;
+  min-width: 0;
 }
 
-.comment {
+.comment-area {
   grid-area: bot1;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.comment-button {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.comment-count {
+  flex: 1;
+  min-width: fit-content;
 }
 
 .spacer {

@@ -32,11 +32,6 @@
   overflow-y: scroll;
 }
 
-.comment {
-  display: flex;
-  flex-direction: row;
-}
-
 .comment-author {
   flex: .5;
 }

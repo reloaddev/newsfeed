@@ -5,8 +5,16 @@
       <div class="user">{{ post.userId }}</div>
       <div class="timestamp">{{ post.date | date: 'dd/MM/yyyy hh:mm:ss' }}</div>
       <div class="post-text">{{ post.text }}</div>
-      <div class="comment">
-        <button mat-raised-button (click)="openCommentDialog(post)">Comment</button>
+      <div class="comment-area">
+        <button
+          mat-raised-button
+          class="comment-button"
+          (click)="openCommentDialog(post)">
+          Comment
+        </button>
+        <button disabled class="comment-count">
+          {{ $any(post).comments.length }} comments
+        </button>
       </div>
     </div>
   </div>
