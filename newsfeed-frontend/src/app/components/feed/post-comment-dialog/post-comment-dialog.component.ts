@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Post } from "../../model/post.model";
-import { Comment } from "../../model/comment.model";
-import { DateSortPipe } from "../../pipes/date-sort.pipe";
+import { Post } from "../../../model/post.model";
+import { Comment } from "../../../model/comment.model";
+import { DateSortPipe } from "../../../pipes/date-sort.pipe";
 
 @Component({
   selector: 'app-post-comment-dialog',

@@ -1,3 +1,14 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-feed {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
 .feed-section {
   flex: 6;
   text-align: center;
