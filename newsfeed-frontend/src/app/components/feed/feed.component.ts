@@ -37,9 +37,9 @@ export class FeedComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((createdPost: Post) => {
       if (createdPost && createdPost.text.length > 0) {
-        this.feedService.uploadPost(createdPost);
+        this.feedService.createPost(createdPost);
       }
-    })
+    });
   }
 
   openCommentDialog(post: Post) {

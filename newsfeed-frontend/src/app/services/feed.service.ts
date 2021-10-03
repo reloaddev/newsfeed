@@ -28,7 +28,7 @@ export class FeedService {
     });
   }
 
-  uploadPost(post: Post) {
+  createPost(post: Post) {
     this.socket.emit('post:create', post);
   }
 

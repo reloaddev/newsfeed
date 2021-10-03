@@ -4,7 +4,7 @@
     <div *ngFor="let post of posts">
       <div class="post">
         <div class="user"
-             routerLink="../profile">
+             routerLink="../profile/{{post.userId}}">
           {{ post.userId }}
         </div>
         <div class="timestamp">{{ post.date | date: 'dd/MM/yyyy hh:mm:ss' }}</div>

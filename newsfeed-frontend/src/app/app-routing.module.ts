@@ -6,13 +6,11 @@ import { ProfileComponent } from "./components/profile/profile.component";
 const routes: Routes = [
   { path: '', component: FeedComponent },
   { path: 'feed', component: FeedComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile/:userId', component: ProfileComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    onSameUrlNavigation: 'reload'
-  })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

@@ -2,7 +2,7 @@ import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from 
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
-  routesToCache: string[] = ['feed'];
+  routesToCache: string[] = ['feed', 'profile/:userId'];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
