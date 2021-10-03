@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { FeedModule } from '../src/feed.module';
 
-describe('AppController (e2e)', () => {
+describe('ProfileGateway (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {

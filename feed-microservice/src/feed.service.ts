@@ -9,12 +9,12 @@ export class FeedService {
     constructor(@InjectModel('Post') private readonly postModel: Model<PostDocument>) {
     }
 
-    async createPost(post: Post): Promise<Post> {
+    async createPost(postDraft: Post): Promise<Post> {
         const createdPost = new this.postModel({
-            userId: post.userId,
-            text: post.text,
-            comments: post.comments,
-            date: post.date
+            userId: postDraft.userId,
+            text: postDraft.text,
+            comments: postDraft.comments,
+            date: postDraft.date
         });
         await createdPost.save();
         return {

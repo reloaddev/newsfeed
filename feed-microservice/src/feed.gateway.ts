@@ -3,17 +3,18 @@ import { Server } from "socket.io";
 import { Observable } from "rxjs";
 import { FeedService } from "./feed.service";
 import { Post } from "./schemas/post.schema";
+import { io } from "socket.io-client";
 
 @WebSocketGateway(8081, { namespace: 'feed' })
-export class FeedGateway implements OnGatewayInit {
+export class FeedGateway {
 
-    constructor(private feedService: FeedService) {}
+    constructor(private readonly feedService: FeedService) {}
 
     @WebSocketServer()
     server: Server;
 
-    afterInit(server: any) {
-    }
+    // Websocket client
+    profileSocket = io('ws://localhost:8082/profile');
 
     @SubscribeMessage('feed:initialization')
     onFeedInitialization(): Observable<Post[]> {
@@ -24,17 +25,17 @@ export class FeedGateway implements OnGatewayInit {
         })
     }
 
-    @SubscribeMessage('feed:new-post')
+    @SubscribeMessage('post:create')
     onPostCreation(@MessageBody() postDraft: Post) {
         this.feedService.createPost(postDraft).then(newPost => {
-            this.server.emit('feed:new-post', newPost)
+            this.server.emit('post:created', newPost)
         });
     }
 
-    @SubscribeMessage('feed:update-post')
+    @SubscribeMessage('post:update')
     async onPostUpdate(@MessageBody() post: Post) {
         const updatedPost = await this.feedService.updatePost(post);
-        this.server.emit('feed:update-post', updatedPost);
+        this.server.emit('post:updated', updatedPost);
     }
 
 }
