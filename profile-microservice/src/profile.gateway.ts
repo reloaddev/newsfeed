@@ -1,12 +1,40 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { ProfileService } from './profile.service';
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Server, Socket } from "socket.io";
+import { Profile } from "./schemas/profile.schema";
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+@WebSocketGateway(8082, { namespace: 'profile' })
+export class ProfileGateway {
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  constructor(private readonly profileService: ProfileService) {}
+
+  @WebSocketServer()
+  server: Server;
+
+  @SubscribeMessage('profile:get')
+  onProfileGet(@MessageBody() userId: string,
+               @ConnectedSocket() client: Socket) {
+    this.profileService.getProfile(userId).then(profile => {
+      if (profile) {
+        client.emit('profile:loaded', profile);
+      } else {
+        client.emit('profile:not-found');
+      }
+    })
   }
+
+  @SubscribeMessage('profile:create')
+  onProfileCreate(@MessageBody() profileDraft: Profile) {
+    this.profileService.createProfile(profileDraft).then(profile => {
+      this.server.emit('profile:created', profile);
+    })
+  }
+
+  @SubscribeMessage('profile:update')
+  onProfileUpdate(@MessageBody() profile: Profile) {
+    this.profileService.updateProfile(profile).then(profile => {
+      this.server.emit('profile:updated', profile);
+    });
+  }
+
 }
