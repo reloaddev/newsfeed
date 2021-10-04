@@ -21,6 +21,7 @@ import { CustomReuseStrategy } from "./reuse-strategy";
 import { ProfileCreationDialogComponent } from './components/profile/profile-creation-dialog/profile-creation-dialog.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { CookieService } from "ngx-cookie-service";
+import { MatTabsModule } from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CookieService } from "ngx-cookie-service";
     ReactiveFormsModule,
     MatCardModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatTabsModule
   ],
   providers: [
     DateSortPipe,
