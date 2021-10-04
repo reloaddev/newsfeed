@@ -20,6 +20,7 @@ import { RouteReuseStrategy } from "@angular/router";
 import { CustomReuseStrategy } from "./reuse-strategy";
 import { ProfileCreationDialogComponent } from './components/profile/profile-creation-dialog/profile-creation-dialog.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { CookieService } from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AuthComponent } from './components/auth/auth.component';
   ],
   providers: [
     DateSortPipe,
+    CookieService,
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
   ],
   bootstrap: [AppComponent]

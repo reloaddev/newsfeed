@@ -19,7 +19,9 @@
     </div>
     <h1>Recent posts</h1>
   </div>
-  <div *ngIf="!profile && this.editEnabled" class="profile">Profile creation in progress...</div>
+  <div *ngIf="!profile && this.editEnabled" class="profile">
+    <button mat-raised-button routerLink="../feed">Return to feed</button>
+  </div>
   <div *ngIf="!profile && !this.editEnabled" class="profile">Missing profile</div>
   <div class="spacer"></div>
 </div>

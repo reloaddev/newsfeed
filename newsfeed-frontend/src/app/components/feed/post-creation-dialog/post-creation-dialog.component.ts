@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from "@angular/material/dialog";
 import { Post } from "../../../model/post.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { AuthService } from "../../auth/auth.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-post-creation-dialog',

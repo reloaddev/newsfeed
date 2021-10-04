@@ -4,7 +4,7 @@ import { Profile } from "../../model/profile.model";
 import { ProfileService } from "../../services/profile.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ProfileCreationDialogComponent } from "./profile-creation-dialog/profile-creation-dialog.component";
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-profile',
