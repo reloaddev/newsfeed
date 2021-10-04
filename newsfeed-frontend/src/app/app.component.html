@@ -4,7 +4,7 @@
     <mat-card class="logged-in">
       <mat-card-content>Logged in as </mat-card-content>
     </mat-card>
-    <button class="submit-login" mat-raised-button>Login</button>
+    <button class="submit-login" mat-raised-button (click)="logout()" routerLink="./auth">Logout</button>
   </div>
 </header>
 <div class="wrapper">
