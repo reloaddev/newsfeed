@@ -1,27 +1,37 @@
 import { Injectable } from '@angular/core';
 import { AuthStore } from "./auth.store";
-import { LoginStatus } from "../../model/user.model";
+import { User } from "../../model/user.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  isLoggedIn = false;
+  loggedInUser: User | null = null;
+  redirectUrl: string | null = null;
+
   constructor(private authStore: AuthStore) {
   }
 
-  login(username: string, password: string): LoginStatus {
+  login(username: string, password: string) {
     let user;
     try {
       user = this.authStore.findUserByName(username);
     } catch (err) {
-      console.error(`Authentication ${err}`);
-      return LoginStatus.NOT_FOUND;
+      this.isLoggedIn = false;
+      return;
     }
     if (!(user.password === password)) {
-      return LoginStatus.WRONG_PASSWORD;
+      this.isLoggedIn = false;
+      return;
     }
-    return LoginStatus.SUCCESSFUL;
+    this.isLoggedIn = true;
+    this.loggedInUser = user;
+  }
+
+  logout(): void {
+    this.isLoggedIn = false;
   }
 
 }

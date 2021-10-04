@@ -7,9 +7,9 @@ import { User } from "../../model/user.model";
 export class AuthStore {
 
   users: User[] = [
-    { username: 'henrik', password: 'secret' },
-    { username: 'test', password: 'pw123' },
-    { username: 'production', password: 'prod' }
+    { username: 'henrik', password: 'secret', userId: 'nwsf-01' },
+    { username: 'test', password: '1234', userId: 'nwsf-02' },
+    { username: 'production', password: 'prod', userId: 'nwsf-03' }
   ]
 
   constructor() {

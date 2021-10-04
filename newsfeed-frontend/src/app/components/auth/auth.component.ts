@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { AuthService } from "./auth.service";
-import { LoginStatus } from "../../model/user.model";
 import { Router } from "@angular/router";
 
 @Component({
@@ -12,9 +11,10 @@ import { Router } from "@angular/router";
 export class AuthComponent implements OnInit {
 
   form!: FormGroup;
+  submitted = false;
 
-  constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
+  constructor(public authService: AuthService,
+              private formBuilder: FormBuilder,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -25,9 +25,10 @@ export class AuthComponent implements OnInit {
   }
 
   login() {
-    const status: LoginStatus = this.authService.login(this.form.value.username, this.form.value.password);
-    if (status === LoginStatus.SUCCESSFUL) {
-      this.router.navigateByUrl('/feed').then();
+    this.authService.login(this.form.value.username, this.form.value.password);
+    this.submitted = true;
+    if (this.authService.isLoggedIn) {
+      this.router.navigateByUrl('/feed');
     }
   }
 

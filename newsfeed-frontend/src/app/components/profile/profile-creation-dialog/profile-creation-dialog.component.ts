@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Profile } from "../../../model/profile.model";
+import { AuthService } from "../../auth/auth.service";
 
 @Component({
   selector: 'app-profile-creation-dialog',
@@ -14,7 +15,8 @@ export class ProfileCreationDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ProfileCreationDialogComponent>,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -27,15 +29,24 @@ export class ProfileCreationDialogComponent implements OnInit {
     })
   }
 
-  submit(form: FormGroup): void {
-    let profile = this.createProfile(this.form.value);
+  submit() {
+    let profile;
+    try {
+      profile = this.createProfile(this.form.value);
+    } catch (err) {
+      return;
+    }
     this.dialogRef.close(profile)
   }
 
   createProfile(data: any): Profile {
+    const userId = this.authService.loggedInUser?.userId;
+    if (!userId) {
+      throw new Error('Cannot create profile without userId');
+    }
     return {
       name: data.name,
-      userId: 'HP-123',
+      userId: userId,
       picture: data.name,
       description: data.description,
       postCount: 0,

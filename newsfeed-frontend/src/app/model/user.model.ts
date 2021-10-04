@@ -1,10 +1,6 @@
 export interface User {
   username: string;
   password: string;
+  userId: string;
 }
 
-export enum LoginStatus {
-  NOT_FOUND,
-  WRONG_PASSWORD,
-  SUCCESSFUL
-}
