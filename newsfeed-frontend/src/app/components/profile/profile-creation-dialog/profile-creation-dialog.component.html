@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submit(form)">
   <h1 mat-dialog-title>Profile Creator</h1>
-  <div class="post-input-area" mat-dialog-content>
+  <div class="profile-input" mat-dialog-content>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name">
@@ -15,7 +15,7 @@
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="">Cancel</button>
     <button mat-raised-button type="submit" mat-dialog-close cdkFocusInitial>
       Create Profile
     </button>

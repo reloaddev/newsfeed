@@ -1,4 +1,12 @@
-<header routerLink="/feed">The newsfeed</header>
+<header routerLink="/feed">
+  <h1 class="title">The newsfeed</h1>
+  <div class="login">
+    <mat-card class="logged-in">
+      <mat-card-content>Logged in as </mat-card-content>
+    </mat-card>
+    <button class="submit-login" mat-raised-button>Login</button>
+  </div>
+</header>
 <div class="wrapper">
   <router-outlet></router-outlet>
 </div>

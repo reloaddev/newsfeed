@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FeedComponent } from "./components/feed/feed.component";
 import { ProfileComponent } from "./components/profile/profile.component";
+import { AuthComponent } from "./components/auth/auth.component";
 
 const routes: Routes = [
-  { path: '', component: FeedComponent },
+  { path: '', component: AuthComponent },
+  { path: 'auth', component: AuthComponent },
   { path: 'feed', component: FeedComponent },
   { path: 'profile/:userId', component: ProfileComponent }
 ];

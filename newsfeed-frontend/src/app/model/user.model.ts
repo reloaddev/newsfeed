@@ -1,5 +1,10 @@
-export interface UserModel {
+export interface User {
   username: string;
-  // todo change to url or picture
-  profilePicture: string;
+  password: string;
+}
+
+export enum LoginStatus {
+  NOT_FOUND,
+  WRONG_PASSWORD,
+  SUCCESSFUL
 }

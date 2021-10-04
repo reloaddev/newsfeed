@@ -1,4 +1,4 @@
-.post-input-area {
+.profile-input {
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -8,10 +8,4 @@
   width: 45em;
   height: 10rem;
   align-self: center;
-}
-
-.post-input-textarea {
-  height: 6rem;
-  resize: none;
-  font-size: 1.3rem;
 }

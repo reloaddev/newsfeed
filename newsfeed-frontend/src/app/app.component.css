@@ -12,10 +12,22 @@ router-outlet {
 header {
   display: flex;
   justify-content: center;
-  align-content: flex-start;
   flex-direction: column;
   min-height: 5rem;
   background-color: steelblue;
   text-align: center;
   font-size: 2rem;
+}
+
+.login {
+  margin-left: auto;
+  display: flex;
+}
+
+.logged-in {
+  flex: 2;
+}
+
+.submit-login {
+  flex: 1;
 }
