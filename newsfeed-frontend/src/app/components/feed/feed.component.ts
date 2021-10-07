@@ -1,14 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FeedService } from "../../services/feed.service";
 import { MatDialog } from "@angular/material/dialog";
 import { PostCreationDialogComponent } from "./post-creation-dialog/post-creation-dialog.component";
 import { Post } from "../../model/post.model";
-import { isEqual, isNil } from "lodash";
 import { PostCommentDialogComponent } from "./post-comment-dialog/post-comment-dialog.component";
-import { Comment } from "../../model/comment.model";
 import { DateSortPipe } from "../../pipes/date-sort.pipe";
-import { Profile } from "../../model/profile.model";
-import { Subscription } from "rxjs";
+import { PostDeleteDialogComponent } from "./post-delete-dialog/post-delete-dialog.component";
 
 @Component({
   selector: 'app-feed',
@@ -51,6 +48,19 @@ export class FeedComponent implements OnInit {
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
       if (postWithComments) {
         this.feedService.updatePost(postWithComments);
+      }
+    });
+  }
+
+  openDeleteDialog(post: Post) {
+    const dialogRef = this.dialog.open(PostDeleteDialogComponent, {
+      width: '20rem',
+      height: '9rem',
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(confirmation => {
+      if (confirmation && post.id) {
+        this.feedService.deletePost(post.id);
       }
     });
   }

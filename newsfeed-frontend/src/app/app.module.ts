@@ -22,6 +22,7 @@ import { ProfileCreationDialogComponent } from './components/profile/profile-cre
 import { AuthComponent } from './components/auth/auth.component';
 import { CookieService } from "ngx-cookie-service";
 import { MatTabsModule } from "@angular/material/tabs";
+import { PostDeleteDialogComponent } from './components/feed/post-delete-dialog/post-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatTabsModule } from "@angular/material/tabs";
     DateSortPipe,
     ProfileComponent,
     ProfileCreationDialogComponent,
-    AuthComponent
+    AuthComponent,
+    PostDeleteDialogComponent
   ],
   imports: [
     BrowserModule,

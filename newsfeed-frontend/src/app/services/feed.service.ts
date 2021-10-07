@@ -35,4 +35,8 @@ export class FeedService {
   updatePost(post: Post) {
     this.socket.emit('post:update', post);
   }
+
+  deletePost(postId: string) {
+    this.socket.emit('post:delete', postId);
+  }
 }
