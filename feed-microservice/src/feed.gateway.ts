@@ -38,4 +38,12 @@ export class FeedGateway {
         this.server.emit('post:updated', updatedPost);
     }
 
+    @SubscribeMessage('post:delete')
+    async onPostDelete(@MessageBody() postId: string) {
+        const deleted = await this.feedService.deletePost(postId);
+        if (deleted) {
+            this.server.emit('post:deleted', postId);
+        }
+    }
+
 }

@@ -41,6 +41,16 @@ export class FeedService {
         }
     }
 
+    async deletePost(postId: string): Promise<boolean> {
+        try {
+            await this.postModel.findByIdAndDelete(postId);
+        } catch (error) {
+            console.error(error);
+            return;
+        }
+        return true;
+    }
+
     async getPosts(): Promise<Post[]> {
         const posts = await this.postModel.find().exec();
         return posts.map(post => ({

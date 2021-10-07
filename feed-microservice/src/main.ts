@@ -1,9 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { FeedModule } from './feed.module';
+import { Logger } from "@nestjs/common";
 
 async function bootstrap() {
   const app = await NestFactory.create(FeedModule);
   await app.listen(3000);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  Logger.log(`Feed microservice is running on: ${await app.getUrl()}`);
 }
 bootstrap();
