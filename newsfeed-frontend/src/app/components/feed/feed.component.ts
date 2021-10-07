@@ -6,6 +6,7 @@ import { Post } from "../../model/post.model";
 import { PostCommentDialogComponent } from "./post-comment-dialog/post-comment-dialog.component";
 import { DateSortPipe } from "../../pipes/date-sort.pipe";
 import { PostDeleteDialogComponent } from "./post-delete-dialog/post-delete-dialog.component";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-feed',
@@ -17,14 +18,19 @@ export class FeedComponent implements OnInit {
   posts: Post[] = [];
 
   constructor(public dialog: MatDialog,
-              private readonly feedService: FeedService,
-              private readonly dateSort: DateSortPipe) {
-  }
+              private feedService: FeedService,
+              private authService: AuthService,
+              private dateSort: DateSortPipe
+  ) {}
 
   ngOnInit(): void {
     this.feedService.connect().subscribe(posts => {
       this.insertPosts(posts);
     });
+  }
+
+  currentIsPostAuthor(post: Post): boolean {
+    return this.authService.loggedInUser?.userId === post.userId;
   }
 
   openCreateDialog() {

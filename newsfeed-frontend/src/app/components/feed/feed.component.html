@@ -22,10 +22,12 @@
             <mat-icon>message</mat-icon>
           </button>
           <button disabled class="comment-count">
-            {{ $any(post).comments.length }} comments
+            {{ $any(post).comments.length }} comment(s)
           </button>
         </div>
-        <div class="action-area">
+        <div
+          *ngIf="currentIsPostAuthor(post)"
+          class="action-area">
           <button
             class="delete"
             mat-stroked-button
