@@ -21,7 +21,7 @@ export class AuthService {
     try {
       this.loggedInUser = JSON.parse(this.cookieService.get('user'));
     } catch (err) {
-      console.error(err);
+      console.error('No user cookie found');
     }
   }
 

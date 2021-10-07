@@ -2,25 +2,42 @@
   <div class="spacer"></div>
   <div class="feed-section">
     <div *ngFor="let post of posts">
-      <div class="post">
+      <mat-card class="post">
         <div class="user"
              routerLink="../profile/{{post.userId}}">
           {{ post.userId }}
         </div>
-        <div class="timestamp">{{ post.date | date: 'dd/MM/yyyy hh:mm:ss' }}</div>
-        <div class="post-text">{{ post.text }}</div>
+        <mat-card class="timestamp">
+          {{ post.date | date: 'dd/MM/yyyy hh:mm:ss' }}
+        </mat-card>
+        <mat-card-content class="post-text">
+          {{ post.text }}
+        </mat-card-content>
         <div class="comment-area">
           <button
             mat-raised-button
+            color="primary"
             class="comment-button"
             (click)="openCommentDialog(post)">
-            Comment
+            <mat-icon>message</mat-icon>
           </button>
           <button disabled class="comment-count">
             {{ $any(post).comments.length }} comments
           </button>
         </div>
-      </div>
+        <div class="action-area">
+          <button
+            class="delete"
+            mat-stroked-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            class="update"
+            mat-stroked-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </mat-card>
     </div>
   </div>
   <div class="spacer">

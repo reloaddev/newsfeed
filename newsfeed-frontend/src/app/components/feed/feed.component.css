@@ -6,6 +6,7 @@
 .app-feed {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   height: 100%;
   flex: 1;
 }
@@ -14,24 +15,26 @@
   flex: 6;
   text-align: center;
   overflow-y: auto;
+  scrollbar-width: none;
   overflow-x: hidden;
   display: flex;
   flex-direction: column-reverse;
-  padding-right: 0.2rem;
 }
 
 .post {
   display: grid;
-  grid-template-columns: 1fr 2fr 10fr 3fr;
-  grid-template-rows: 1.5fr 3fr 2fr;
+  grid-template-columns: 1fr 1fr 0.25fr 10fr 0.25fr 1.5fr;
+  grid-template-rows: 1fr 1fr 4fr 1fr 2fr;
   grid-template-areas:
-    "top1 top2 top3 top4"
-    "mid1 mid2 mid3 mid4"
-    "bot1 bot1 bot3 bot4";
+    "top1 .     .  .    .     top6"
+    "top1 .     .  mid4 .     top6"
+    ".    .     .  mid4 .     .   "
+    "bot1 bot1  .  mid4 .     bot6"
+    "bot1 bot1  .  .    .     bot6";
+  box-sizing: border-box;
   width: 100%;
-  height: 8rem;
+  height: 10rem;
   margin: 0 0 5px 0;
-  border: 2px solid black;
   min-height: 0;
   min-width: 0;
 }
@@ -48,7 +51,7 @@
 }
 
 .post-text {
-  grid-area: mid3;
+  grid-area: mid4;
   display: flex;
   flex-direction: row;
   align-content: flex-start;
@@ -59,14 +62,14 @@
 }
 
 .timestamp {
-  grid-area: top4;
+  grid-area: top6;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: right;
-  margin-right: 0.2rem;
   overflow: hidden;
   min-width: 0;
+  background-color: #3f51b5;
+  color: white;
 }
 
 .comment-area {
@@ -84,6 +87,25 @@
 }
 
 .comment-count {
+  flex: 2;
+  min-width: fit-content;
+}
+
+.action-area {
+  grid-area: bot6;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.delete {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.update {
   flex: 1;
   min-width: fit-content;
 }
