@@ -17,9 +17,6 @@
   flex: 7;
 }
 
-.comment-textarea {
-}
-
 .post {
   height: 5rem;
 }
@@ -38,10 +35,6 @@
 
 .comment-text {
   flex: 5;
-}
-
-.comment-date {
-
 }
 
 

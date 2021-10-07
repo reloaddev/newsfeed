@@ -23,6 +23,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { CookieService } from "ngx-cookie-service";
 import { MatTabsModule } from "@angular/material/tabs";
 import { PostDeleteDialogComponent } from './components/feed/post-delete-dialog/post-delete-dialog.component';
+import { PostUpdateDialogComponent } from './components/feed/post-update-dialog/post-update-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PostDeleteDialogComponent } from './components/feed/post-delete-dialog/
     ProfileComponent,
     ProfileCreationDialogComponent,
     AuthComponent,
-    PostDeleteDialogComponent
+    PostDeleteDialogComponent,
+    PostUpdateDialogComponent
   ],
   imports: [
     BrowserModule,

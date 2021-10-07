@@ -7,6 +7,7 @@ import { PostCommentDialogComponent } from "./post-comment-dialog/post-comment-d
 import { DateSortPipe } from "../../pipes/date-sort.pipe";
 import { PostDeleteDialogComponent } from "./post-delete-dialog/post-delete-dialog.component";
 import { AuthService } from "../../services/auth.service";
+import { PostUpdateDialogComponent } from "./post-update-dialog/post-update-dialog.component";
 
 @Component({
   selector: 'app-feed',
@@ -54,6 +55,20 @@ export class FeedComponent implements OnInit {
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
       if (postWithComments) {
         this.feedService.updatePost(postWithComments);
+      }
+    });
+  }
+
+  openUpdateDialog(post: Post) {
+    const dialogRef = this.dialog.open(PostUpdateDialogComponent, {
+      width: "70rem",
+      height: "50rem",
+      data: post
+    });
+    dialogRef.afterClosed().subscribe((updatedText: string) => {
+      if (post.text !== updatedText) {
+        post.text = updatedText
+        this.feedService.updatePost(post);
       }
     });
   }

@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div mat-dialog-content>
+    <mat-form-field class="post" appearance="fill">
+      <mat-label>Selected Post</mat-label>
+      <textarea
+        #postTextArea
+        formControlName="postText"
+        class="post-textarea"
+        matNativeControl
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="3"
+        maxlength="300">
+      </textarea>
+      <div class="post-length-count">
+        {{ postTextArea.value.length }} / 300 Characters
+      </div>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="">
+      Cancel
+    </button>
+    <button mat-raised-button mat-dialog-close type="submit">
+      Update Post
+    </button>
+  </div>
+</form>

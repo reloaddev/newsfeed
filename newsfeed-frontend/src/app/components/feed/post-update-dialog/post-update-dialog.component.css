@@ -1,0 +1,13 @@
+.post {
+  height: 13rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-textarea {
+  height: 100%;
+}
+
+.post-length-count {
+  flex: 7;
+}
