@@ -60,7 +60,11 @@ export class FeedComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation && post.id) {
-        this.feedService.deletePost(post.id);
+        this.feedService.deletePost(post.id).then(postId => {
+            this.posts = this.posts.filter(post => post.id !== postId);
+            this.posts = this.dateSort.transform(this.posts) as Post[];
+          }
+        );
       }
     });
   }

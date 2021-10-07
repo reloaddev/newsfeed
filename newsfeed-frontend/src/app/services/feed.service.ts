@@ -3,7 +3,6 @@ import { io } from "socket.io-client";
 import { Observable } from "rxjs";
 import { Post } from "../model/post.model";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +35,14 @@ export class FeedService {
     this.socket.emit('post:update', post);
   }
 
-  deletePost(postId: string) {
+  deletePost(postId: string): Promise<string> {
     this.socket.emit('post:delete', postId);
+    return new Promise<string>((resolve) => {
+      this.socket.on('post:deleted', (postId: string) => {
+        if (postId) {
+          resolve(postId);
+        }
+      });
+    });
   }
 }
