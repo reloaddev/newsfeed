@@ -10,8 +10,6 @@ export class ProfileService {
 
   socket = io('ws://localhost:8082/profile')
 
-  constructor() { }
-
   connect(userId: string): Observable<Profile> {
     return new Observable<Profile>(observer => {
       this.socket.on('connect', () => {
@@ -38,5 +36,18 @@ export class ProfileService {
 
   updateProfile(profile: Profile) {
     this.socket.emit('profile:update', profile);
+  }
+
+  getProfilePictures(): Promise<{ [userId: string]: string }> {
+    this.socket.emit('profile:get-pictures');
+    return new Promise<{ [userId: string]: string }>((resolve, reject) => {
+      this.socket.on('profile:pictures', (
+        pictureDictionary: { [userId: string]: string }) => {
+        if (pictureDictionary) {
+          resolve(pictureDictionary);
+        }
+        reject(new Error('No profile picture found!'));
+      });
+    })
   }
 }

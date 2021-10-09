@@ -37,4 +37,14 @@ export class ProfileGateway {
     });
   }
 
+  @SubscribeMessage('profile:get-pictures')
+  async onGetProfilePictures() {
+    const profiles = await this.profileService.getAllProfiles();
+    const pictureDictionary: { [userId: string]: string } = {};
+    profiles.forEach(profile => {
+      pictureDictionary[profile.userId] = profile.picture;
+    });
+    this.server.emit('profile:pictures', pictureDictionary);
+  }
+
 }

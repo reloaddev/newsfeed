@@ -9,8 +9,11 @@ export class ProfileService {
     constructor(@InjectModel('Profile') private readonly profileModel: Model<ProfileDocument>) {}
 
     async getProfile(userId: string): Promise<Profile> {
-        const profile = await this.findProfile(userId);
-        return profile
+        return await this.findProfile(userId)
+    }
+
+    async getAllProfiles(): Promise<Profile[]> {
+        return await this.profileModel.find({});
     }
 
     async createProfile(profileDraft: Profile): Promise<Profile> {

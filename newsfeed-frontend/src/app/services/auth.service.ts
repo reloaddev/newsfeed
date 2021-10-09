@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthStore } from "../components/auth/auth.store";
+import { AuthStore } from "../stores/auth.store";
 import { User } from "../model/user.model";
 import { CookieService } from "ngx-cookie-service";
 

@@ -8,6 +8,7 @@ import { DateSortPipe } from "../../pipes/date-sort.pipe";
 import { PostDeleteDialogComponent } from "./post-delete-dialog/post-delete-dialog.component";
 import { AuthService } from "../../services/auth.service";
 import { PostUpdateDialogComponent } from "./post-update-dialog/post-update-dialog.component";
+import { ProfileService } from "../../services/profile.service";
 
 @Component({
   selector: 'app-feed',
@@ -17,10 +18,12 @@ import { PostUpdateDialogComponent } from "./post-update-dialog/post-update-dial
 export class FeedComponent implements OnInit {
 
   posts: Post[] = [];
+  pictureDictionary: { [userId: string] : string } = {}
 
   constructor(public dialog: MatDialog,
               private feedService: FeedService,
               private authService: AuthService,
+              private profileService: ProfileService,
               private dateSort: DateSortPipe
   ) {}
 
@@ -28,6 +31,9 @@ export class FeedComponent implements OnInit {
     this.feedService.connect().subscribe(posts => {
       this.insertPosts(posts);
     });
+    this.profileService.getProfilePictures().then((pictureDictionary => {
+      this.pictureDictionary = pictureDictionary;
+    }));
   }
 
   currentIsPostAuthor(post: Post): boolean {
