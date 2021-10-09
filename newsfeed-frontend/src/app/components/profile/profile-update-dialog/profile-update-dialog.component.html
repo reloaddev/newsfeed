@@ -17,24 +17,11 @@
     <mat-form-field appearance="fill">
       <mat-label>Profile Picture</mat-label>
       <mat-select formControlName="picture">
-        <mat-option value="../../../assets/images/pic1.jpg">
-          <img src="../../../../assets/images/pic1.jpg" alt="" width="30" height="30">
-          Orange Clone Trooper
-        </mat-option>
-        <mat-option value="../../../assets/images/pic2.jpg">
-          <img src="../../../../assets/images/pic2.jpg" alt="" width="30" height="30">
-          Captain Rex
-        </mat-option>
-        <mat-option value="../../../assets/images/pic3.jpg">
-          <img src="../../../../assets/images/pic3.jpg" alt="" width="30" height="30">
-          Ashoka Tano</mat-option>
-        <mat-option value="../../../assets/images/pic4.jpg">
-          <img src="../../../../assets/images/pic4.jpg" alt="" width="30" height="30">
-          Bolla Ropal
-        </mat-option>
-        <mat-option value="../../../assets/images/pic5.jpg">
-          <img src="../../../../assets/images/pic5.jpg" alt="" width="30" height="30">
-          Darth Maul
+        <mat-option *ngFor="let picture of pictures"
+                    value="{{ picture.source }}">
+          <img src="{{ picture.source }}"
+               alt="" width="30" height="30">
+          {{ picture.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
