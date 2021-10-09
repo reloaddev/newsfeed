@@ -38,15 +38,12 @@ export class ProfileService {
     this.socket.emit('profile:update', profile);
   }
 
-  getProfilePictures(): Promise<{ [userId: string]: string }> {
+  getProfilePictures(): Observable<{ [userId: string]: string }> {
     this.socket.emit('profile:get-pictures');
-    return new Promise<{ [userId: string]: string }>((resolve, reject) => {
+    return new Observable<{ [userId: string]: string }>(observer => {
       this.socket.on('profile:pictures', (
         pictureDictionary: { [userId: string]: string }) => {
-        if (pictureDictionary) {
-          resolve(pictureDictionary);
-        }
-        reject(new Error('No profile picture found!'));
+          observer.next(pictureDictionary);
       });
     })
   }

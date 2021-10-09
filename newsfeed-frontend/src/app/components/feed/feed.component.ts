@@ -31,7 +31,7 @@ export class FeedComponent implements OnInit {
     this.feedService.connect().subscribe(posts => {
       this.insertPosts(posts);
     });
-    this.profileService.getProfilePictures().then((pictureDictionary => {
+    this.profileService.getProfilePictures().subscribe((pictureDictionary => {
       this.pictureDictionary = pictureDictionary;
     }));
   }
