@@ -38,6 +38,7 @@ export class ProfileService {
 
     async updateProfile(profile: Profile): Promise<Profile> {
         const updateProfile = await this.findProfile(profile.userId);
+        updateProfile.name = profile.name;
         updateProfile.description = profile.description;
         updateProfile.picture = profile.picture;
         updateProfile.postCount = profile.postCount;

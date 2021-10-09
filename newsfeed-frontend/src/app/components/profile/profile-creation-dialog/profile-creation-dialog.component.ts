@@ -22,10 +22,8 @@ export class ProfileCreationDialogComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: '',
-      picture: '',
       description: '',
-      postCount: '',
-      commentCount: ''
+      picture: ''
     })
   }
 
@@ -47,8 +45,8 @@ export class ProfileCreationDialogComponent implements OnInit {
     return {
       name: data.name,
       userId: userId,
-      picture: data.name,
       description: data.description,
+      picture: data.picture,
       postCount: 0,
       commentCount: 0
     }

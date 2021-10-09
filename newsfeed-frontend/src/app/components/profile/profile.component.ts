@@ -5,6 +5,7 @@ import { ProfileService } from "../../services/profile.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ProfileCreationDialogComponent } from "./profile-creation-dialog/profile-creation-dialog.component";
 import { AuthService } from "../../services/auth.service";
+import { ProfileUpdateDialogComponent } from "./profile-update-dialog/profile-update-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -26,8 +27,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     const userId = this.route.snapshot.paramMap.get('userId') as string;
     this.editEnabled = userId === this.authService.loggedInUser?.userId;
-    this.profileService.connect(userId).subscribe(
-      profile => {
+    this.profileService.connect(userId).subscribe(profile => {
         if (profile) {
           this.profile = profile
         } else {
@@ -47,6 +47,19 @@ export class ProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe((createdProfile: Profile) => {
       if (createdProfile) {
         this.profileService.createProfile(createdProfile);
+      }
+    });
+  }
+
+  openProfileUpdater() {
+    const dialogRef = this.dialog.open(ProfileUpdateDialogComponent, {
+      width: '70rem',
+      height: '30rem',
+      data: this.profile
+    });
+    dialogRef.afterClosed().subscribe((updateProfile: Profile) => {
+      if (updateProfile) {
+        this.profileService.updateProfile(updateProfile);
       }
     });
   }

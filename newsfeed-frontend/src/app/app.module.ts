@@ -24,6 +24,9 @@ import { CookieService } from "ngx-cookie-service";
 import { MatTabsModule } from "@angular/material/tabs";
 import { PostDeleteDialogComponent } from './components/feed/post-delete-dialog/post-delete-dialog.component';
 import { PostUpdateDialogComponent } from './components/feed/post-update-dialog/post-update-dialog.component';
+import { ProfileUpdateDialogComponent } from './components/profile/profile-update-dialog/profile-update-dialog.component';
+import { MatOptionModule } from "@angular/material/core";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { PostUpdateDialogComponent } from './components/feed/post-update-dialog/
     ProfileCreationDialogComponent,
     AuthComponent,
     PostDeleteDialogComponent,
-    PostUpdateDialogComponent
+    PostUpdateDialogComponent,
+    ProfileUpdateDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,9 @@ import { PostUpdateDialogComponent } from './components/feed/post-update-dialog/
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatTabsModule
+    MatTabsModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   providers: [
     DateSortPipe,
