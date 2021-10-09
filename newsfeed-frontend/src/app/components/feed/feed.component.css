@@ -16,6 +16,7 @@
   text-align: center;
   overflow-y: auto;
   scrollbar-width: none;
+  scroll-behavior: smooth;
   overflow-x: hidden;
   display: flex;
   flex-direction: column-reverse;

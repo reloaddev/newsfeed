@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FeedService } from "../../services/feed.service";
 import { MatDialog } from "@angular/material/dialog";
 import { PostCreationDialogComponent } from "./post-creation-dialog/post-creation-dialog.component";
@@ -9,31 +9,56 @@ import { PostDeleteDialogComponent } from "./post-delete-dialog/post-delete-dial
 import { AuthService } from "../../services/auth.service";
 import { PostUpdateDialogComponent } from "./post-update-dialog/post-update-dialog.component";
 import { ProfileService } from "../../services/profile.service";
+import { NavigationEnd, NavigationStart, Router } from "@angular/router";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, AfterViewInit {
 
   posts: Post[] = [];
   pictureDictionary: { [userId: string] : string } = {}
+  newPostsAvailable = false;
+  @ViewChild('feedSection') feedSection!: ElementRef;
+  lastRoute: string = '';
+  lastPosition: string = '';
 
   constructor(public dialog: MatDialog,
+              private router: Router,
               private feedService: FeedService,
               private authService: AuthService,
               private profileService: ProfileService,
               private dateSort: DateSortPipe
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.feedService.connect().subscribe(posts => {
       this.insertPosts(posts);
     });
     this.profileService.getProfilePictures().subscribe((pictureDictionary => {
       this.pictureDictionary = pictureDictionary;
     }));
+    this.router.events.pipe(
+      filter((events) => events instanceof NavigationStart || events instanceof NavigationEnd)
+    ).subscribe(event => {
+        if (event instanceof NavigationStart && event.url !== this.lastRoute) {
+          this.lastRoute = this.router.url
+          this.lastPosition = this.feedSection.nativeElement.scrollTop
+        }
+        else if (event instanceof NavigationEnd && event.url === this.lastRoute) {
+          this.feedSection.nativeElement.scrollTo({ top: this.lastPosition })
+        }
+      }
+    )
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.feedSection.nativeElement.scrollTop = -this.feedSection.nativeElement.scrollHeight;
+    }, 1000);
   }
 
   currentIsPostAuthor(post: Post): boolean {
@@ -102,8 +127,11 @@ export class FeedComponent implements OnInit {
       this.posts = this.dateSort.transform(this.posts) as Post[];
       return;
     }
-    this.posts.push(...this.filterDuplicatePosts(this.posts, newPosts));
-    this.posts = this.dateSort.transform(this.posts) as Post[];
+    const filteredNewPosts = this.filterDuplicatePosts(this.posts, newPosts)
+    if (filteredNewPosts.length > 0) {
+      this.newPostsAvailable = true;
+      this.posts = this.dateSort.transform(this.posts) as Post[];
+    }
   }
 
   private filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {

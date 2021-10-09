@@ -1,6 +1,6 @@
 <div class="app-feed">
   <div class="spacer"></div>
-  <div class="feed-section">
+  <div #feedSection class="feed-section">
     <div *ngFor="let post of posts">
       <mat-card class="post">
         <div class="user"
@@ -46,5 +46,12 @@
   </div>
   <div class="spacer">
     <button class="open-dialog" mat-raised-button (click)="openCreateDialog()">Create New Post</button>
+    <button
+      mat-raised-button
+      *ngIf="newPostsAvailable"
+      (click)="feedSection.scrollTop = -feedSection.scrollHeight; newPostsAvailable = false"
+      color="primary">
+      New Posts arrived!
+    </button>
   </div>
 </div>
