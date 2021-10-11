@@ -20,7 +20,7 @@ import { filter } from "rxjs/operators";
 export class FeedComponent implements OnInit, AfterViewInit {
 
   posts: Post[] = [];
-  pictureDictionary: { [userId: string] : string } = {}
+  pictureDictionary: { [userId: string]: string } = {}
   newPostsAvailable = false;
   @ViewChild('feedSection') feedSection!: ElementRef;
   lastRoute: string = '';
@@ -32,7 +32,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private profileService: ProfileService,
               private dateSort: DateSortPipe
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.feedService.connect().subscribe(posts => {
@@ -47,8 +48,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
         if (event instanceof NavigationStart && event.url !== this.lastRoute) {
           this.lastRoute = this.router.url
           this.lastPosition = this.feedSection.nativeElement.scrollTop
-        }
-        else if (event instanceof NavigationEnd && event.url === this.lastRoute) {
+        } else if (event instanceof NavigationEnd && event.url === this.lastRoute) {
           this.feedSection.nativeElement.scrollTo({ top: this.lastPosition })
         }
       }
@@ -143,8 +143,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     comparePosts.forEach(comparePost => {
       posts.forEach(post => {
         if (post.id === comparePost.id) {
-          if (post.comments!.length < comparePost.comments!.length) {
-            this.posts = this.posts.filter((p: Post) => p !== post);
+          if (post.comments!.length < comparePost.comments!.length || post.text !== comparePost.text) {
+            this.posts = this.posts.filter(p => p !== post);
             this.posts.push(comparePost);
           }
           comparePosts = comparePosts.filter(p => p !== comparePost);
