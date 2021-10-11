@@ -1,13 +1,13 @@
 :host {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .app-feed {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 100%;
   flex: 1;
 }
 

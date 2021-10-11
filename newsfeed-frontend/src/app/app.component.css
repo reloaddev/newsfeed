@@ -19,16 +19,3 @@ header {
   color: white;
   font-size: 2rem;
 }
-
-.login {
-  margin-left: auto;
-  display: flex;
-}
-
-.logged-in {
-  flex: 2;
-}
-
-.submit-login {
-  flex: 1;
-}
