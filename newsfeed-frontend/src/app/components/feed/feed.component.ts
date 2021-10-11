@@ -130,7 +130,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
       this.posts = this.dateSort.transform(this.posts) as Post[];
       return;
     }
-    const filteredNewPosts = this.filterDuplicatePosts(this.posts, newPosts)
+    newPosts = this.filterDeletedPosts(newPosts);
+    const filteredNewPosts = this.filterDuplicatedPosts(this.posts, newPosts);
     if (filteredNewPosts.length > 0) {
       this.newPostsAvailable = true;
       this.posts.push(...filteredNewPosts);
@@ -138,7 +139,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
+  private filterDuplicatedPosts(posts: Post[], comparePosts: Post[]): Post[] {
     comparePosts.forEach(comparePost => {
       posts.forEach(post => {
         if (post.id === comparePost.id) {
@@ -151,5 +152,13 @@ export class FeedComponent implements OnInit, AfterViewInit {
       });
     });
     return comparePosts;
+  }
+
+  private filterDeletedPosts(posts: Post[]) {
+    const deletePosts = posts.filter(post => !post.userId);
+    deletePosts.forEach(deletePost => {
+      this.posts = this.posts.filter(post => post.id !== deletePost.id);
+    });
+    return posts.filter(post => post.userId);
   }
 }

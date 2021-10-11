@@ -24,6 +24,9 @@ export class FeedService {
       this.socket.on('post:updated', (post: Post) => {
         observer.next([post]);
       });
+      this.socket.on('post:deleted', (postId: string) => {
+        observer.next(FeedService.createDeletePostForId(postId));
+      });
     });
   }
 
@@ -44,5 +47,17 @@ export class FeedService {
         }
       });
     });
+  }
+
+  private static createDeletePostForId(postId: string): Post[] {
+    return [
+      {
+        id: postId,
+        userId: '',
+        text: '',
+        date: new Date(),
+        comments: []
+      }
+    ]
   }
 }
