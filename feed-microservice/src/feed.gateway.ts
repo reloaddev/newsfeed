@@ -1,4 +1,4 @@
-import { MessageBody, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server } from "socket.io";
 import { Observable } from "rxjs";
 import { FeedService } from "./feed.service";
@@ -8,7 +8,8 @@ import { io } from "socket.io-client";
 @WebSocketGateway(8081, { namespace: 'feed' })
 export class FeedGateway {
 
-    constructor(private readonly feedService: FeedService) {}
+    constructor(private readonly feedService: FeedService) {
+    }
 
     @WebSocketServer()
     server: Server;
@@ -26,10 +27,16 @@ export class FeedGateway {
     }
 
     @SubscribeMessage('post:create')
-    onPostCreation(@MessageBody() postDraft: Post) {
-        this.feedService.createPost(postDraft).then(newPost => {
-            this.server.emit('post:created', newPost)
-        });
+    async onPostCreation(@MessageBody() postDraft: Post) {
+        const newPost = await this.feedService.createPost(postDraft);
+        if (newPost) {
+            this.server.emit('post:created', newPost);
+            const posts = await this.feedService.getPostsByUserId(newPost.userId);
+            this.profileSocket.emit(
+                'profile:update-metrics',
+                { userId: newPost.userId, metric: 'POST_COUNT', count: posts.length }
+            );
+        }
     }
 
     @SubscribeMessage('post:update')
@@ -40,9 +47,15 @@ export class FeedGateway {
 
     @SubscribeMessage('post:delete')
     async onPostDelete(@MessageBody() postId: string) {
+        const post = await this.feedService.getPost(postId);
         const deleted = await this.feedService.deletePost(postId);
         if (deleted) {
             this.server.emit('post:deleted', postId);
+            const posts = await this.feedService.getPostsByUserId(post.userId);
+            this.profileSocket.emit(
+                'profile:update-metrics',
+                { userId: post.userId, metric: 'POST_COUNT', count: posts.length }
+            );
         }
     }
 

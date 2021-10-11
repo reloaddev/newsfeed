@@ -27,7 +27,7 @@ export class FeedService {
     }
 
     async updatePost(post: Post): Promise<Post> {
-        const updatedPost = await this.findPost(post.id);
+        const updatedPost = await this.getPost(post.id);
         updatedPost.userId = post.userId;
         updatedPost.text = post.text;
         updatedPost.comments = post.comments;
@@ -46,13 +46,13 @@ export class FeedService {
             await this.postModel.findByIdAndDelete(postId);
         } catch (error) {
             console.error(error);
-            return;
+            return false;
         }
         return true;
     }
 
     async getPosts(): Promise<Post[]> {
-        const posts = await this.postModel.find().exec();
+        const posts: PostDocument[] = await this.postModel.find().exec();
         return posts.map(post => ({
             id: post.id,
             userId: post.userId,
@@ -62,7 +62,17 @@ export class FeedService {
         }));
     }
 
-    private async findPost(id: string): Promise<PostDocument> {
+    async getPostsByUserId(userId: string) {
+        let posts: PostDocument[] = [];
+        try {
+            posts = await this.postModel.find({ userId: userId });
+        } catch (error) {
+            throw new NotFoundException(`Could not find any posts for user '${userId}'`);
+        }
+        return posts;
+    }
+
+    async getPost(id: string): Promise<PostDocument> {
         let post: PostDocument;
         try {
             post = await this.postModel.findById(id);
@@ -74,5 +84,4 @@ export class FeedService {
         }
         return post;
     }
-
 }

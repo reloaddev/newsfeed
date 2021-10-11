@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from "mongoose";
 import { Profile, ProfileDocument } from "./schemas/profile.schema";
 import { InjectModel } from "@nestjs/mongoose";
+import { ProfileMetric } from "./schemas/profile-metric.model";
 
 @Injectable()
 export class ProfileService {
@@ -54,12 +55,28 @@ export class ProfileService {
         }
     }
 
+    async updateProfileMetrics(userId: string, metric: ProfileMetric, count: number) {
+        const updateProfile = await this.findProfile(userId);
+        switch (metric) {
+            case ProfileMetric.POST_COUNT: {
+                updateProfile.postCount = count;
+                break;
+            }
+            case ProfileMetric.COMMENT_COUNT: {
+                updateProfile.commentCount = count;
+                break;
+            }
+        }
+        await updateProfile.save();
+        return updateProfile;
+    }
+
     private async findProfile(userId: string): Promise<ProfileDocument> | undefined {
         let profile: ProfileDocument;
         try {
             profile = await this.profileModel.findOne({ userId: userId });
         } catch (error) {
-            throw new NotFoundException('Could not find post');
+            throw new NotFoundException('Could not find profile');
         }
         if (!profile) {
             return undefined;
