@@ -52,7 +52,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
           this.feedSection.nativeElement.scrollTo({ top: this.lastPosition })
         }
       }
-    )
+    );
   }
 
   ngAfterViewInit() {
@@ -61,7 +61,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
-  currentIsPostAuthor(post: Post): boolean {
+  isCurrentPostAuthor(post: Post): boolean {
     return this.authService.loggedInUser?.userId === post.userId;
   }
 
@@ -130,6 +130,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
     const filteredNewPosts = this.filterDuplicatePosts(this.posts, newPosts)
     if (filteredNewPosts.length > 0) {
       this.newPostsAvailable = true;
+      this.posts.push(...filteredNewPosts);
       this.posts = this.dateSort.transform(this.posts) as Post[];
     }
   }
