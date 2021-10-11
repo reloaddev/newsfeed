@@ -28,7 +28,7 @@
 .comments {
   overflow-y: scroll;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
 
 .comment {

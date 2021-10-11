@@ -15,6 +15,7 @@ export class PostCommentDialogComponent implements OnInit {
 
   form!: FormGroup;
   post: Post;
+  comments: Comment[] = [];
   pictureDictionary: { [userId: string] : string } = {}
 
   constructor(
@@ -34,6 +35,7 @@ export class PostCommentDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       commentText: ''
     });
+    this.comments.push(...this.post.comments);
   }
 
   addComment(text: string) {
@@ -42,10 +44,11 @@ export class PostCommentDialogComponent implements OnInit {
       text: text,
       date: new Date()
     }
-    this.post.comments?.push(comment);
+    this.comments.push(comment);
   }
 
   submit() {
+    this.post.comments = this.comments;
     this.dialogRef.close(this.post);
   }
 

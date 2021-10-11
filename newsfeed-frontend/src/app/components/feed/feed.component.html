@@ -22,7 +22,7 @@
             <mat-icon>message</mat-icon>
           </button>
           <button disabled class="comment-count">
-            {{ $any(post).comments.length }} comment(s)
+            {{ post.comments?.length }} comment(s)
           </button>
         </div>
         <div
