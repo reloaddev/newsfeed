@@ -8,8 +8,8 @@ export class AuthStore {
 
   users: User[] = [
     { username: 'henrik', password: 'secret', userId: 'nwsf-01' },
-    { username: 'test', password: '1234', userId: 'nwsf-02' },
-    { username: 'production', password: 'prod', userId: 'nwsf-03' }
+    { username: 'test', password: 'secret', userId: 'nwsf-02' },
+    { username: 'production', password: 'secret', userId: 'nwsf-03' }
   ]
 
   constructor() {
