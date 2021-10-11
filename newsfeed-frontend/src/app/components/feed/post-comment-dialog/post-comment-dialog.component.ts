@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Post } from "../../../model/post.model";
 import { Comment } from "../../../model/comment.model";
 import { AuthService } from "../../../services/auth.service";
+import { ProfileService } from "../../../services/profile.service";
 
 @Component({
   selector: 'app-post-comment-dialog',
@@ -14,20 +15,25 @@ export class PostCommentDialogComponent implements OnInit {
 
   form!: FormGroup;
   post: Post;
+  pictureDictionary: { [userId: string] : string } = {}
 
   constructor(
     public dialogRef: MatDialogRef<PostCommentDialogComponent>,
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private profileService: ProfileService,
     @Inject(MAT_DIALOG_DATA) post: Post
   ) {
     this.post = post;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.profileService.getProfilePictures().subscribe((pictureDictionary => {
+      this.pictureDictionary = pictureDictionary;
+    }));
     this.form = this.formBuilder.group({
       commentText: ''
-    })
+    });
   }
 
   addComment(text: string) {

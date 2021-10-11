@@ -27,10 +27,26 @@
 
 .comments {
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
 }
 
 .comment-author {
   flex: .5;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.comment-author > img {
+  border-radius: 50%;
 }
 
 .comment-text {
