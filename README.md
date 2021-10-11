@@ -5,9 +5,9 @@ REQUIREMENTS
 
 INSTALLATION
 
-1) Install Angular CLI globally
+1) Install Angular CLI globally (https://angular.io/cli)
 
-2) Install Nest.js CLI globally
+2) Install Nest.js CLI globally (https://docs.nestjs.com/cli/overview)
 
 3) Open three terminal/command prompt sessions
 
