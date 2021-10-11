@@ -13,54 +13,82 @@ export class ProfileGateway {
     @WebSocketServer()
     server: Server;
 
-    // TODO simplify to async...await
     @SubscribeMessage('profile:get')
-    onProfileGet(@MessageBody() userId: string,
-                 @ConnectedSocket() client: Socket) {
-        this.profileService.getProfile(userId).then(profile => {
-            if (profile) {
-                client.emit('profile:loaded', profile);
-            } else {
-                client.emit('profile:not-found');
-            }
-        })
+    async onGetProfile(@MessageBody() userId: string, @ConnectedSocket() client: Socket) {
+        let profile;
+        try {
+            profile = await this.profileService.getProfile(userId);
+        } catch (error) {
+            console.error(error);
+            client.emit('profile:not-found'); // TODO client-side error handling
+            return;
+        }
+        client.emit('profile:loaded', profile);
     }
 
     @SubscribeMessage('profile:create')
-    async onProfileCreate(@MessageBody() profileDraft: Profile) {
-        const profile = await this.profileService.createProfile(profileDraft);
+    async onCreateProfile(@MessageBody() profileDraft: Profile, @ConnectedSocket() client: Socket) {
+        let profile;
+        try {
+            profile = await this.profileService.createProfile(profileDraft);
+        } catch (error) {
+            console.error(error);
+            client.emit('profile:not-created'); // TODO client-side error handling
+            return;
+        }
         this.server.emit('profile:created', profile);
     }
 
     @SubscribeMessage('profile:update')
-    async onProfileUpdate(@MessageBody() profile: Profile) {
-        const updatedProfile = await this.profileService.updateProfile(profile);
+    async onUpdateProfile(@MessageBody() profile: Profile, @ConnectedSocket() client: Socket) {
+        let updatedProfile;
+        try {
+            updatedProfile = await this.profileService.updateProfile(profile);
+        } catch (error) {
+            console.error(error);
+            client.emit('profile:not-updated'); // TODO client-side error handling
+            return;
+        }
         this.server.emit('profile:updated', updatedProfile);
     }
 
     @SubscribeMessage('profile:update-metrics')
-    async onProfileMetricUpdate(
+    async onUpdateProfileMetrics(
         @MessageBody('userId') userId: string,
         @MessageBody('metric') metric: string,
-        @MessageBody('count') count: number)
-    {
-        const updatedProfile = await this.profileService.updateProfileMetrics(
-            userId,
-            ProfileMetric[metric],
-            count
-        );
+        @MessageBody('count') count: number,
+        @ConnectedSocket() client: Socket
+    ) {
+        let updatedProfile;
+        try {
+            updatedProfile = await this.profileService.updateProfileMetrics(
+                userId,
+                ProfileMetric[metric],
+                count
+            );
+        } catch (error) {
+            console.error(error);
+            client.emit('profile:not-updated'); // TODO client-side error handling
+            return;
+        }
         this.server.emit('profile:updated', updatedProfile);
     }
 
     @SubscribeMessage('profile:get-pictures')
-    async onGetProfilePictures() {
-        const profiles = await this.profileService.getAllProfiles();
+    async onGetProfilePictures(@ConnectedSocket() client: Socket) {
+        let profiles;
+        try {
+            profiles = await this.profileService.getAllProfiles();
+        } catch (error) {
+            console.error(error);
+            client.emit('profiles:not-found'); // TODO client-side error handling
+            return;
+        }
         const pictureDictionary: { [userId: string]: string } = {};
         profiles.forEach(profile => {
             pictureDictionary[profile.userId] = profile.picture;
         });
         this.server.emit('profile:pictures', pictureDictionary);
     }
-
 
 }
