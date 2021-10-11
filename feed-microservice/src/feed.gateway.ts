@@ -1,6 +1,5 @@
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
-import { Observable } from "rxjs";
 import { FeedService } from "./feed.service";
 import { Post } from "./schemas/post.schema";
 import { io } from "socket.io-client";
@@ -17,12 +16,9 @@ export class FeedGateway {
     profileSocket = io('ws://localhost:8082/profile');
 
     @SubscribeMessage('feed:initialization')
-    onFeedInitialization(): Observable<Post[]> {
-        return new Observable<Post[]>(observer => {
-            this.feedService.getPosts().then(posts => {
-                observer.next(posts)
-            });
-        })
+    async onFeedInitialization() {
+        const posts = await this.feedService.getPosts();
+        this.server.emit('feed:all-posts', posts);
     }
 
     @SubscribeMessage('post:create')
@@ -52,7 +48,7 @@ export class FeedGateway {
 
     @SubscribeMessage('post:update')
     async onUpdatePost(
-        @MessageBody('userId')  userId: string,
+        @MessageBody('userId') userId: string,
         @MessageBody('post') post: Post,
         @ConnectedSocket() client: Socket
     ) {

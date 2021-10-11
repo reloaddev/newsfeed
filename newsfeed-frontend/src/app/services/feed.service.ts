@@ -10,22 +10,40 @@ export class FeedService {
 
   socket = io('ws://localhost:8081/feed');
 
-  connect(): Observable<Post[]> {
+  initializeFeed(): Observable<Post[]> {
     return new Observable<Post[]>(observer => {
       this.socket.on('connect', () => {
         console.log(`Socket Id: ${ this.socket.id }`);
-        this.socket.emit('feed:initialization', (recentPosts: Post[]) => {
-          observer.next(recentPosts);
-        });
+        this.socket.emit('feed:initialization');
       });
+      this.socket.on('feed:all-posts', (posts: Post[]) => {
+        observer.next(posts);
+      });
+    });
+  }
+
+  addCreateEventListener() {
+    return new Observable<Post>(observer => {
       this.socket.on('post:created', (post: Post) => {
-        observer.next([post]);
+        observer.next(post);
       });
+    });
+  }
+
+  addUpdateEventListener() {
+    return new Observable<Post>(observer => {
       this.socket.on('post:updated', (post: Post) => {
-        observer.next([post]);
+        observer.next(post);
       });
+    });
+  }
+
+  addDeleteEventListener() {
+    return new Observable<string>(observer => {
       this.socket.on('post:deleted', (postId: string) => {
-        observer.next(FeedService.createDeletePostForId(postId));
+        if (postId) {
+          observer.next(postId);
+        }
       });
     });
   }
@@ -49,15 +67,4 @@ export class FeedService {
     });
   }
 
-  private static createDeletePostForId(postId: string): Post[] {
-    return [
-      {
-        id: postId,
-        userId: '',
-        text: '',
-        date: new Date(),
-        comments: []
-      }
-    ]
-  }
 }

@@ -36,12 +36,35 @@ export class FeedComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.feedService.connect().subscribe(posts => {
-      this.insertPosts(posts);
+    this.feedService.initializeFeed().subscribe(posts => {
+      this.initializeFeed(posts);
     });
-    this.profileService.getProfilePictures().subscribe(pictureDictionary => {
+    this.addEventListeners();
+    this.enableScrollPositionRestoration();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.feedSection.nativeElement.scrollTop = -this.feedSection.nativeElement.scrollHeight;
+    }, 1000);
+  }
+
+  addEventListeners() {
+    this.feedService.addCreateEventListener().subscribe(post => {
+      this.createPost(post);
+    });
+    this.feedService.addUpdateEventListener().subscribe(post => {
+      this.updatePost(post);
+    });
+    this.feedService.addDeleteEventListener().subscribe(postId => {
+      this.deletePost(postId);
+    });
+    this.profileService.addPictureEventListener().subscribe(pictureDictionary => {
       this.pictureDictionary = pictureDictionary;
     });
+  }
+
+  enableScrollPositionRestoration() {
     this.router.events.pipe(
       filter((events) => events instanceof NavigationStart || events instanceof NavigationEnd)
     ).subscribe(event => {
@@ -53,12 +76,6 @@ export class FeedComponent implements OnInit, AfterViewInit {
         }
       }
     );
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.feedSection.nativeElement.scrollTop = -this.feedSection.nativeElement.scrollHeight;
-    }, 1000);
   }
 
   isCurrentPostAuthor(post: Post): boolean {
@@ -124,42 +141,34 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private insertPosts(newPosts: Post[]) {
+  private initializeFeed(posts: Post[]) {
     if (this.posts.length === 0) {
-      this.posts.push(...newPosts);
-      this.posts = this.dateSort.transform(this.posts) as Post[];
-      return;
-    }
-    newPosts = this.filterDeletedPosts(newPosts);
-    const filteredNewPosts = this.filterDuplicatedPosts(this.posts, newPosts);
-    if (filteredNewPosts.length > 0) {
-      this.posts.push(...filteredNewPosts);
+      this.posts.push(...posts);
       this.posts = this.dateSort.transform(this.posts) as Post[];
     }
+  }
+
+  private createPost(post: Post) {
+    this.posts.push(post);
+    this.posts = this.dateSort.transform(this.posts) as Post[];
+    this.checkIfFeedSectionScrollable();
+  }
+
+  private updatePost(updatePost: Post) {
+    this.posts = this.posts.filter(post => post.id !== updatePost.id);
+    this.posts.push(updatePost);
+    this.posts = this.dateSort.transform(this.posts) as Post[];
+    this.checkIfFeedSectionScrollable();
+  }
+
+  private deletePost(postId: string) {
+    this.posts = this.posts.filter(post => post.id !== postId);
+    this.posts = this.dateSort.transform(this.posts) as Post[];
+    this.checkIfFeedSectionScrollable();
+  }
+
+  private checkIfFeedSectionScrollable() {
     this.newPostsAvailable =
       this.feedSection.nativeElement.clientHeight < this.feedSection.nativeElement.scrollHeight;
-  }
-
-  private filterDuplicatedPosts(posts: Post[], comparePosts: Post[]): Post[] {
-    comparePosts.forEach(comparePost => {
-      posts.forEach(post => {
-        if (post.id === comparePost.id) {
-          if (post.comments!.length < comparePost.comments!.length || post.text !== comparePost.text) {
-            this.posts = this.posts.filter(p => p !== post);
-            this.posts.push(comparePost);
-          }
-          comparePosts = comparePosts.filter(p => p !== comparePost);
-        }
-      });
-    });
-    return comparePosts;
-  }
-
-  private filterDeletedPosts(posts: Post[]) {
-    const deletePosts = posts.filter(post => !post.userId);
-    deletePosts.forEach(deletePost => {
-      this.posts = this.posts.filter(post => post.id !== deletePost.id);
-    });
-    return posts.filter(post => post.userId);
   }
 }
