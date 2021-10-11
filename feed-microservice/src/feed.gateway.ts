@@ -102,7 +102,7 @@ export class FeedGateway {
         this.profileSocket.emit(
             'profile:update-metrics',
             { userId: userId, metric: 'COMMENT_COUNT', count: comments.length }
-        )
+        );
     }
 
 }

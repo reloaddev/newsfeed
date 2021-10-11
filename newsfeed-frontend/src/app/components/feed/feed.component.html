@@ -19,10 +19,10 @@
             color="primary"
             class="comment-button"
             (click)="openCommentDialog(post)">
-            <mat-icon>message</mat-icon>
+            <mat-icon>forum</mat-icon>
           </button>
-          <button disabled class="comment-count">
-            {{ post.comments?.length }} comment(s)
+          <button mat-stroked-button disabled class="comment-count">
+            {{ post.comments?.length }}<mat-icon color="primary">message</mat-icon>
           </button>
         </div>
         <div
@@ -51,7 +51,7 @@
       *ngIf="newPostsAvailable"
       (click)="feedSection.scrollTop = -feedSection.scrollHeight; newPostsAvailable = false"
       color="primary">
-      New Posts arrived!
+      More Posts...
     </button>
   </div>
 </div>

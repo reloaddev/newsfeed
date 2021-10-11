@@ -39,9 +39,9 @@ export class FeedComponent implements OnInit, AfterViewInit {
     this.feedService.connect().subscribe(posts => {
       this.insertPosts(posts);
     });
-    this.profileService.getProfilePictures().subscribe((pictureDictionary => {
+    this.profileService.getProfilePictures().subscribe(pictureDictionary => {
       this.pictureDictionary = pictureDictionary;
-    }));
+    });
     this.router.events.pipe(
       filter((events) => events instanceof NavigationStart || events instanceof NavigationEnd)
     ).subscribe(event => {
@@ -133,10 +133,11 @@ export class FeedComponent implements OnInit, AfterViewInit {
     newPosts = this.filterDeletedPosts(newPosts);
     const filteredNewPosts = this.filterDuplicatedPosts(this.posts, newPosts);
     if (filteredNewPosts.length > 0) {
-      this.newPostsAvailable = true;
       this.posts.push(...filteredNewPosts);
       this.posts = this.dateSort.transform(this.posts) as Post[];
     }
+    this.newPostsAvailable =
+      this.feedSection.nativeElement.clientHeight < this.feedSection.nativeElement.scrollHeight;
   }
 
   private filterDuplicatedPosts(posts: Post[], comparePosts: Post[]): Post[] {
