@@ -85,7 +85,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
       if (postWithComments) {
-        this.feedService.updatePost(postWithComments);
+        let user = this.authService.loggedInUser?.userId;
+        this.feedService.updatePost(user as string, postWithComments);
       }
     });
   }
@@ -98,8 +99,9 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((updatedText: string) => {
       if (post.text !== updatedText) {
+        let user = this.authService.loggedInUser?.userId;
         post.text = updatedText
-        this.feedService.updatePost(post);
+        this.feedService.updatePost(user as string, post);
       }
     });
   }

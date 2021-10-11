@@ -12,10 +12,10 @@
       <mat-card>"{{ profile.description }}"</mat-card>
     </div>
     <div class="post-count">
-      <mat-card>{{ profile.postCount }} Posts</mat-card>
+      <mat-card>{{ profile.postCount }} Post(s)</mat-card>
     </div>
     <div class="comment-count">
-      <mat-card>{{ profile.commentCount }} Comments</mat-card>
+      <mat-card>{{ profile.commentCount }} Comment(s)</mat-card>
     </div>
     <div *ngIf="this.editEnabled" class="profile">
       <button mat-raised-button (click)="openProfileUpdater()">Edit Profile</button>

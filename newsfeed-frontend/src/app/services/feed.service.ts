@@ -31,8 +31,8 @@ export class FeedService {
     this.socket.emit('post:create', post);
   }
 
-  updatePost(post: Post) {
-    this.socket.emit('post:update', post);
+  updatePost(userId: string, post: Post) {
+    this.socket.emit('post:update', { userId: userId,post: post });
   }
 
   deletePost(postId: string): Promise<string> {
