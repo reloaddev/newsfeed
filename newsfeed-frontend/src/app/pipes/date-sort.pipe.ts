@@ -7,15 +7,15 @@ import { Entry } from "../model/entry.model";
 })
 export class DateSortPipe implements PipeTransform {
 
-  transform(entry: Entry[] | undefined): Entry[] | undefined {
-    if (entry) {
-      entry = entry.sort((a, b) => {
+  transform(entries: Entry[] | undefined): Entry[] | undefined {
+    if (entries) {
+      entries = entries.sort((a, b) => {
         if(a.date < b.date) return -1;
         if(a.date > b.date) return 1;
         return 0;
       })
     }
-    return entry;
+    return entries;
   }
 
 }

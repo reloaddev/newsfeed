@@ -1,0 +1,56 @@
+.comment-area {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.comment-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-info {
+  display: flex;
+}
+
+.comment-length-count {
+  flex: 7;
+}
+
+.post {
+  height: 5rem;
+}
+
+.add-comment {
+  flex: 1;
+}
+
+.comments {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-author {
+  flex: .5;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.comment-author > img {
+  border-radius: 50%;
+}
+
+.comment-text {
+  flex: 5;
+}
+
+

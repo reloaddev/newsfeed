@@ -6,5 +6,5 @@ export interface Post extends Entry {
   userId: string;
   text: string;
   date: Date;
-  comments?: Comment[];
+  comments: Comment[];
 }

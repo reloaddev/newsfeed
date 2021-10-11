@@ -1,0 +1,11 @@
+.profile-input {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.post-input-field {
+  width: 45em;
+  height: 10rem;
+  align-self: center;
+}

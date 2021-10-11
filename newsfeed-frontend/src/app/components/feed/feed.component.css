@@ -1,0 +1,129 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-feed {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100%;
+  flex: 1;
+}
+
+.feed-section {
+  flex: 6;
+  text-align: center;
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: 0.6fr 0.6fr 0.4fr 0.25fr 10fr 0.25fr 1.5fr;
+  grid-template-rows: 1fr 1fr 1fr 4fr 1fr 2fr;
+  grid-template-areas:
+    "top1  .     .     .  .     .  top6"
+    "top1  .     .     .  mid4  .  top6"
+    "top1  .     .     .  mid4  .  .   "
+    ".     .     .     .  mid4  .  .   "
+    "bot1  bot1  bot1  .  mid4  .  bot6"
+    "bot1  bot1  bot1  .  .     .  bot6";
+  box-sizing: border-box;
+  width: 100%;
+  height: 11rem;
+  margin: 0 0 5px 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  grid-area: top1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.user > img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+}
+
+.post-text {
+  grid-area: mid4;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  font-size: 1rem;
+  text-align: left;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.timestamp {
+  grid-area: top6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 0;
+  background-color: #3f51b5;
+  color: white;
+}
+
+.comment-area {
+  grid-area: bot1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.comment-button {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.comment-count {
+  flex: 2;
+  min-width: fit-content;
+}
+
+.action-area {
+  grid-area: bot6;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.delete {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.update {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.spacer {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: lightgrey;
+}
+
+.open-dialog {
+  height: 3rem;
+}
+

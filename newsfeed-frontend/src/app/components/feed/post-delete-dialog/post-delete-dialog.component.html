@@ -1,0 +1,20 @@
+<mat-card class="delete-confirmation-check">
+  <mat-card-content>
+    Do you really want to delete your post?
+  </mat-card-content>
+</mat-card>
+<div class="delete-actions">
+  <button
+    mat-stroked-button
+    class="delete-abort"
+    [mat-dialog-close]="">
+    Abort
+  </button>
+  <button
+    mat-stroked-button
+    class="delete-confirm"
+    (click)="confirm()">
+    Delete
+  </button>
+</div>
+

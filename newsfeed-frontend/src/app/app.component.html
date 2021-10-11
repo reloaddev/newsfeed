@@ -1,4 +1,11 @@
-<header>The newsfeed</header>
+<header routerLink="/feed">
+  <h1 class="title">The newsfeed</h1>
+</header>
+<nav mat-tab-nav-bar>
+  <a mat-tab-link (click)="navToFeed()">Feed</a>
+  <a mat-tab-link (click)="navToProfile()">Profile</a>
+  <a mat-tab-link (click)="logout()">Logout</a>
+</nav>
 <div class="wrapper">
-  <app-feed></app-feed>
+  <router-outlet></router-outlet>
 </div>
