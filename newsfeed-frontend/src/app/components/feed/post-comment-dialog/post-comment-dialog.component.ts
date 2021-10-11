@@ -29,7 +29,7 @@ export class PostCommentDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.profileService.getProfilePictures().subscribe((pictureDictionary => {
+    this.profileService.addPictureEventListener().subscribe((pictureDictionary => {
       this.pictureDictionary = pictureDictionary;
     }));
     this.form = this.formBuilder.group({

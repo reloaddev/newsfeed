@@ -3,6 +3,7 @@ import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSo
 import { Server, Socket } from "socket.io";
 import { Profile } from "./schemas/profile.schema";
 import { ProfileMetric } from "./schemas/profile-metric.model";
+import { io } from "socket.io-client";
 
 @WebSocketGateway(8082, { namespace: 'profile' })
 export class ProfileGateway {
@@ -12,6 +13,8 @@ export class ProfileGateway {
 
     @WebSocketServer()
     server: Server;
+
+    feedSocket = io('ws://localhost:8081/feed');
 
     @SubscribeMessage('profile:get')
     async onGetProfile(@MessageBody() userId: string, @ConnectedSocket() client: Socket) {
@@ -50,6 +53,9 @@ export class ProfileGateway {
             return;
         }
         this.server.emit('profile:updated', updatedProfile);
+        const pictureDictionary = await this.getPictureDictionary();
+        this.server.emit('profile:pictures', pictureDictionary);
+
     }
 
     @SubscribeMessage('profile:update-metrics')
@@ -76,19 +82,23 @@ export class ProfileGateway {
 
     @SubscribeMessage('profile:get-pictures')
     async onGetProfilePictures(@ConnectedSocket() client: Socket) {
-        let profiles;
+        const pictureDictionary = await this.getPictureDictionary();
+        this.server.emit('profile:pictures', pictureDictionary);
+    }
+
+    private async getPictureDictionary(): Promise<{ [userId: string]: string }> {
+        let profiles = [];
         try {
             profiles = await this.profileService.getAllProfiles();
         } catch (error) {
             console.error(error);
-            client.emit('profiles:not-found'); // TODO client-side error handling
             return;
         }
         const pictureDictionary: { [userId: string]: string } = {};
         profiles.forEach(profile => {
             pictureDictionary[profile.userId] = profile.picture;
         });
-        this.server.emit('profile:pictures', pictureDictionary);
+        return pictureDictionary;
     }
 
 }

@@ -38,7 +38,7 @@ export class ProfileService {
     this.socket.emit('profile:update', profile);
   }
 
-  getProfilePictures(): Observable<{ [userId: string]: string }> {
+  addPictureEventListener(): Observable<{ [userId: string]: string }> {
     this.socket.emit('profile:get-pictures');
     return new Observable<{ [userId: string]: string }>(observer => {
       this.socket.on('profile:pictures', (

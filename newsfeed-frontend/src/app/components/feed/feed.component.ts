@@ -20,7 +20,7 @@ import { filter } from "rxjs/operators";
 export class FeedComponent implements OnInit, AfterViewInit {
 
   posts: Post[] = [];
-  pictureDictionary: { [userId: string] : string } = {}
+  pictureDictionary: { [userId: string]: string } = {}
   newPostsAvailable = false;
   @ViewChild('feedSection') feedSection!: ElementRef;
   lastRoute: string = '';
@@ -32,33 +32,50 @@ export class FeedComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private profileService: ProfileService,
               private dateSort: DateSortPipe
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
-    this.feedService.connect().subscribe(posts => {
-      this.insertPosts(posts);
+    this.feedService.initializeFeed().subscribe(posts => {
+      this.initializeFeed(posts);
     });
-    this.profileService.getProfilePictures().subscribe((pictureDictionary => {
-      this.pictureDictionary = pictureDictionary;
-    }));
-    this.router.events.pipe(
-      filter((events) => events instanceof NavigationStart || events instanceof NavigationEnd)
-    ).subscribe(event => {
-        if (event instanceof NavigationStart && event.url !== this.lastRoute) {
-          this.lastRoute = this.router.url
-          this.lastPosition = this.feedSection.nativeElement.scrollTop
-        }
-        else if (event instanceof NavigationEnd && event.url === this.lastRoute) {
-          this.feedSection.nativeElement.scrollTo({ top: this.lastPosition })
-        }
-      }
-    );
+    this.addEventListeners();
+    this.enableScrollPositionRestoration();
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.feedSection.nativeElement.scrollTop = -this.feedSection.nativeElement.scrollHeight;
     }, 1000);
+  }
+
+  addEventListeners() {
+    this.feedService.addCreateEventListener().subscribe(post => {
+      this.createPost(post);
+    });
+    this.feedService.addUpdateEventListener().subscribe(post => {
+      this.updatePost(post);
+    });
+    this.feedService.addDeleteEventListener().subscribe(postId => {
+      this.deletePost(postId);
+    });
+    this.profileService.addPictureEventListener().subscribe(pictureDictionary => {
+      this.pictureDictionary = pictureDictionary;
+    });
+  }
+
+  enableScrollPositionRestoration() {
+    this.router.events.pipe(
+      filter((events) => events instanceof NavigationStart || events instanceof NavigationEnd)
+    ).subscribe(event => {
+        if (event instanceof NavigationStart && event.url !== this.lastRoute) {
+          this.lastRoute = this.router.url
+          this.lastPosition = this.feedSection.nativeElement.scrollTop
+        } else if (event instanceof NavigationEnd && event.url === this.lastRoute) {
+          this.feedSection.nativeElement.scrollTo({ top: this.lastPosition })
+        }
+      }
+    );
   }
 
   isCurrentPostAuthor(post: Post): boolean {
@@ -124,32 +141,34 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private insertPosts(newPosts: Post[]) {
+  private initializeFeed(posts: Post[]) {
     if (this.posts.length === 0) {
-      this.posts.push(...newPosts);
-      this.posts = this.dateSort.transform(this.posts) as Post[];
-      return;
-    }
-    const filteredNewPosts = this.filterDuplicatePosts(this.posts, newPosts)
-    if (filteredNewPosts.length > 0) {
-      this.newPostsAvailable = true;
-      this.posts.push(...filteredNewPosts);
+      this.posts.push(...posts);
       this.posts = this.dateSort.transform(this.posts) as Post[];
     }
   }
 
-  private filterDuplicatePosts(posts: Post[], comparePosts: Post[]): Post[] {
-    comparePosts.forEach(comparePost => {
-      posts.forEach(post => {
-        if (post.id === comparePost.id) {
-          if (post.comments!.length < comparePost.comments!.length) {
-            this.posts = this.posts.filter((p: Post) => p !== post);
-            this.posts.push(comparePost);
-          }
-          comparePosts = comparePosts.filter(p => p !== comparePost);
-        }
-      });
-    });
-    return comparePosts;
+  private createPost(post: Post) {
+    this.posts.push(post);
+    this.posts = this.dateSort.transform(this.posts) as Post[];
+    this.checkIfFeedSectionScrollable();
+  }
+
+  private updatePost(updatePost: Post) {
+    this.posts = this.posts.filter(post => post.id !== updatePost.id);
+    this.posts.push(updatePost);
+    this.posts = this.dateSort.transform(this.posts) as Post[];
+    this.checkIfFeedSectionScrollable();
+  }
+
+  private deletePost(postId: string) {
+    this.posts = this.posts.filter(post => post.id !== postId);
+    this.posts = this.dateSort.transform(this.posts) as Post[];
+    this.checkIfFeedSectionScrollable();
+  }
+
+  private checkIfFeedSectionScrollable() {
+    this.newPostsAvailable =
+      this.feedSection.nativeElement.clientHeight < this.feedSection.nativeElement.scrollHeight;
   }
 }
