@@ -69,11 +69,14 @@ export class FeedGateway {
         this.profileSocket.emit(
             'profile:update-metrics',
             { userId: userId, metric: 'COMMENT_COUNT', count: comments.length }
-        )
+        );
     }
 
     @SubscribeMessage('post:delete')
-    async onDeletePost(@MessageBody() postId: string, @ConnectedSocket() client: Socket) {
+    async onDeletePost(
+        @MessageBody('userId') userId: string,
+        @MessageBody('postId') postId: string,
+        @ConnectedSocket() client: Socket) {
         let post;
         try {
             post = await this.feedService.getPost(postId);
@@ -95,6 +98,11 @@ export class FeedGateway {
             'profile:update-metrics',
             { userId: post.userId, metric: 'POST_COUNT', count: posts.length }
         );
+        const comments = await this.feedService.getCommentsByUserId(userId);
+        this.profileSocket.emit(
+            'profile:update-metrics',
+            { userId: userId, metric: 'COMMENT_COUNT', count: comments.length }
+        )
     }
 
 }

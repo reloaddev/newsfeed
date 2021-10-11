@@ -85,8 +85,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
       if (postWithComments) {
-        let user = this.authService.loggedInUser?.userId;
-        this.feedService.updatePost(user as string, postWithComments);
+        let userId = this.authService.loggedInUser?.userId;
+        this.feedService.updatePost(userId as string, postWithComments);
       }
     });
   }
@@ -99,9 +99,9 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((updatedText: string) => {
       if (post.text !== updatedText) {
-        let user = this.authService.loggedInUser?.userId;
         post.text = updatedText
-        this.feedService.updatePost(user as string, post);
+        let userId = this.authService.loggedInUser?.userId;
+        this.feedService.updatePost(userId as string, post);
       }
     });
   }
@@ -114,7 +114,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation && post.id) {
-        this.feedService.deletePost(post.id).then(postId => {
+        let userId = this.authService.loggedInUser?.userId;
+        this.feedService.deletePost(userId as string, post.id).then(postId => {
             this.posts = this.posts.filter(post => post.id !== postId);
             this.posts = this.dateSort.transform(this.posts) as Post[];
           }
