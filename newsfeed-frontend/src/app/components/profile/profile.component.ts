@@ -11,7 +11,7 @@ import { ProfileUpdateDialogComponent } from "./profile-update-dialog/profile-up
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  providers: [ ProfileService ]
+  providers: [ProfileService]
 })
 export class ProfileComponent implements OnInit {
 
@@ -27,16 +27,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     const userId = this.route.snapshot.paramMap.get('userId') as string;
     this.editEnabled = userId === this.authService.loggedInUser?.userId;
-    this.profileService.connect(userId).subscribe(profile => {
-        if (profile) {
-          this.profile = profile
-        } else {
-          if (this.editEnabled) {
-            this.openProfileCreator();
-          }
-        }
-      }
-    );
+    this.addEventListeners();
+    this.profileService.loadProfile(userId).subscribe(profile => {
+      this.profile = profile
+    });
   }
 
   openProfileCreator() {
@@ -64,4 +58,17 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  private addEventListeners() {
+    this.profileService.addCreateEventListener().subscribe(profile => {
+      this.profile = profile;
+    })
+    this.profileService.addUpdateEventListener().subscribe(profile => {
+      this.profile = profile;
+    });
+    this.profileService.addNotFoundEventListener().subscribe(notFound => {
+      if (notFound && this.editEnabled) {
+        this.openProfileCreator();
+      }
+    });
+  }
 }

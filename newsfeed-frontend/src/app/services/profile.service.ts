@@ -10,21 +10,12 @@ export class ProfileService {
 
   socket = io('ws://localhost:8082/profile')
 
-  connect(userId: string): Observable<Profile> {
+  loadProfile(userId: string): Observable<Profile> {
     return new Observable<Profile>(observer => {
       this.socket.on('connect', () => {
         this.socket.emit('profile:get', userId);
       });
       this.socket.on('profile:loaded', (profile: Profile) => {
-        observer.next(profile);
-      });
-      this.socket.on('profile:not-found', () => {
-        observer.next(undefined);
-      });
-      this.socket.on('profile:created', (profile: Profile) => {
-        observer.next(profile);
-      });
-      this.socket.on('profile:updated', (profile: Profile) => {
         observer.next(profile);
       });
     });
@@ -36,6 +27,30 @@ export class ProfileService {
 
   updateProfile(profile: Profile) {
     this.socket.emit('profile:update', profile);
+  }
+
+  addCreateEventListener(): Observable<Profile> {
+    return new Observable<Profile>(observer => {
+      this.socket.on('profile:created', (profile: Profile) => {
+        observer.next(profile);
+      });
+    });
+  }
+
+  addUpdateEventListener(): Observable<Profile> {
+    return new Observable<Profile>(observer => {
+      this.socket.on('profile:updated', (profile: Profile) => {
+        observer.next(profile);
+      });
+    });
+  }
+
+  addNotFoundEventListener(): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this.socket.on('profile:not-found', () => {
+        observer.next(true);
+      });
+    });
   }
 
   addPictureEventListener(): Observable<{ [userId: string]: string }> {
