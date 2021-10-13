@@ -56,15 +56,8 @@ export class FeedService {
     this.socket.emit('post:update', { userId: userId, post: post });
   }
 
-  deletePost(userId: string, postId: string): Promise<string> {
+  deletePost(userId: string, postId: string) {
     this.socket.emit('post:delete', { userId: userId, postId: postId });
-    return new Promise<string>((resolve) => {
-      this.socket.on('post:deleted', (postId: string) => {
-        if (postId) {
-          resolve(postId);
-        }
-      });
-    });
   }
 
 }

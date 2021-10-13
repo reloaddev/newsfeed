@@ -132,11 +132,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation && post.id) {
         let userId = this.authService.loggedInUser?.userId;
-        this.feedService.deletePost(userId as string, post.id).then(postId => {
-            this.posts = this.posts.filter(post => post.id !== postId);
-            this.posts = this.dateSort.transform(this.posts) as Post[];
-          }
-        );
+        this.feedService.deletePost(userId as string, post.id);
       }
     });
   }
