@@ -32,20 +32,19 @@ export class FeedGateway {
             return;
         }
         this.server.emit('post:created', newPost);
+        let posts;
+        try {
+            posts = await this.feedService.getPostsByUserId(newPost.userId);
+        } catch (error) {
+            console.error(error);
+            client.emit('profile:metrics-not-updated'); // TODO client-side error handling
+            return;
+        }
+        this.profileSocket.emit(
+            'profile:update-metrics',
+            { userId: newPost.userId, metric: 'POST_COUNT', count: posts.length }
+        );
     }
-        // let posts;
-        // try {
-        //     posts = await this.feedService.getPostsByUserId(newPost.userId);
-        // } catch (error) {
-        //     console.error(error);
-        //     client.emit('profile:metrics-not-updated'); // TODO client-side error handling
-        //     return;
-        // }
-        // this.profileSocket.emit(
-        //     'profile:update-metrics',
-        //     { userId: newPost.userId, metric: 'POST_COUNT', count: posts.length }
-        // );
-    // }
 
     @SubscribeMessage('post:update')
     async onUpdatePost(
