@@ -25,7 +25,7 @@ export class PostCreationDialogComponent implements OnInit {
     })
   }
 
-  submit(form: FormGroup) {
+  submit() {
     let post;
     try {
       post = this.createPost(this.form.value.postText);

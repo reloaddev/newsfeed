@@ -22,7 +22,8 @@
             <mat-icon>forum</mat-icon>
           </button>
           <button mat-stroked-button disabled class="comment-count">
-            {{ post.comments?.length }}<mat-icon color="primary">message</mat-icon>
+            {{ post.comments?.length }}
+            <mat-icon color="primary">message</mat-icon>
           </button>
         </div>
         <div
@@ -45,7 +46,11 @@
     </div>
   </div>
   <div class="spacer">
-    <button class="open-dialog" mat-raised-button (click)="openCreateDialog()">Create New Post</button>
+    <button
+      class="open-dialog"
+      mat-raised-button
+      (click)="openCreateDialog()">Create New Post
+    </button>
     <button
       mat-raised-button
       *ngIf="newPostsAvailable"

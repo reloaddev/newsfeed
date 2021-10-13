@@ -22,11 +22,12 @@ import { ProfileCreationDialogComponent } from './components/profile/profile-cre
 import { AuthComponent } from './components/auth/auth.component';
 import { CookieService } from "ngx-cookie-service";
 import { MatTabsModule } from "@angular/material/tabs";
-import { PostDeleteDialogComponent } from './components/feed/post-delete-dialog/post-delete-dialog.component';
+import { DeleteDialogComponent } from './components/shared/delete-dialog/delete-dialog.component';
 import { PostUpdateDialogComponent } from './components/feed/post-update-dialog/post-update-dialog.component';
 import { ProfileUpdateDialogComponent } from './components/profile/profile-update-dialog/profile-update-dialog.component';
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -38,27 +39,28 @@ import { MatSelectModule } from "@angular/material/select";
     ProfileComponent,
     ProfileCreationDialogComponent,
     AuthComponent,
-    PostDeleteDialogComponent,
+    DeleteDialogComponent,
     PostUpdateDialogComponent,
     ProfileUpdateDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatTabsModule,
-    MatOptionModule,
-    MatSelectModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatIconModule,
+        MatInputModule,
+        MatTabsModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatTooltipModule
+    ],
   providers: [
     DateSortPipe,
     CookieService,

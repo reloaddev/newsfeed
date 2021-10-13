@@ -1,5 +1,4 @@
 <div class="profile-page">
-  <div class="spacer"></div>
   <div *ngIf="profile" class="profile">
     <h1>Profile of {{ profile.name }}</h1>
     <div class="picture">
@@ -17,13 +16,16 @@
     <div class="comment-count">
       <mat-card>{{ profile.commentCount }} Comment(s)</mat-card>
     </div>
-    <div *ngIf="this.editEnabled" class="profile">
-      <button mat-raised-button (click)="openProfileUpdater()">Edit Profile</button>
-    </div>
-    <div *ngIf="!profile && this.editEnabled" class="profile">
-      <button mat-raised-button routerLink="../feed">Return to feed</button>
-    </div>
     <div *ngIf="!profile && !this.editEnabled" class="profile">Missing profile</div>
-    <div class="spacer"></div>
+  </div>
+  <div *ngIf="profile && this.editEnabled" class="profile">
+    <button mat-raised-button (click)="openUpdateDialog()">Edit Profile</button>
+    <button mat-raised-button (click)="openDeleteDialog()">Delete Profile</button>
+  </div>
+  <div *ngIf="!profile && this.editEnabled" class="profile">
+    <button mat-raised-button (click)="openCreateDialog()">Create Profile</button>
+  </div>
+  <div *ngIf="!profile && !this.editEnabled" class="profile">
+    <button mat-raised-button routerLink="../feed">Return to feed</button>
   </div>
 </div>

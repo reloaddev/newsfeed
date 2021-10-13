@@ -40,6 +40,8 @@ export class ProfileGateway {
             return;
         }
         this.server.emit('profile:created', profile);
+        const pictureDictionary = await this.getPictureDictionary();
+        this.server.emit('profile:pictures', pictureDictionary);
     }
 
     @SubscribeMessage('profile:update')
@@ -55,7 +57,21 @@ export class ProfileGateway {
         this.server.emit('profile:updated', updatedProfile);
         const pictureDictionary = await this.getPictureDictionary();
         this.server.emit('profile:pictures', pictureDictionary);
+    }
 
+    @SubscribeMessage('profile:delete')
+    async onDeleteProfile(@MessageBody() userId: string, @ConnectedSocket() client: Socket) {
+        try {
+            await this.profileService.deleteProfile(userId);
+        } catch (error) {
+            console.error(error);
+            client.emit('profile:not-deleted', userId); // TODO client-side error handling
+            return;
+        }
+        this.server.emit('profile:not-found', userId);
+        this.feedSocket.emit('feed:profile-deleted', userId);
+        const pictureDictionary = await this.getPictureDictionary();
+        this.server.emit('profile:pictures', pictureDictionary);
     }
 
     @SubscribeMessage('profile:update-metrics')
