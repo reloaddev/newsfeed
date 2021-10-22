@@ -5,7 +5,7 @@ import { PostCreationDialogComponent } from "./post-creation-dialog/post-creatio
 import { Post } from "../../model/post.model";
 import { PostCommentDialogComponent } from "./post-comment-dialog/post-comment-dialog.component";
 import { DateSortPipe } from "../../pipes/date-sort.pipe";
-import { PostDeleteDialogComponent } from "./post-delete-dialog/post-delete-dialog.component";
+import { DeleteDialogComponent } from "../shared/delete-dialog/delete-dialog.component";
 import { AuthService } from "../../services/auth.service";
 import { PostUpdateDialogComponent } from "./post-update-dialog/post-update-dialog.component";
 import { ProfileService } from "../../services/profile.service";
@@ -124,10 +124,11 @@ export class FeedComponent implements OnInit, AfterViewInit {
   }
 
   openDeleteDialog(post: Post) {
-    const dialogRef = this.dialog.open(PostDeleteDialogComponent, {
-      width: '20rem',
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '21rem',
       height: '9rem',
-      autoFocus: false
+      autoFocus: false,
+      data: { type: 'post' }
     });
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation && post.id) {

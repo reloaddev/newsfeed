@@ -46,7 +46,7 @@ export class FeedService {
             await this.postModel.findByIdAndDelete(postId);
         } catch (error) {
             console.error(error);
-            return false;
+            throw new Error(postId);
         }
         return true;
     }

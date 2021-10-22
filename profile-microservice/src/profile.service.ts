@@ -55,8 +55,25 @@ export class ProfileService {
         }
     }
 
+    async deleteProfile(userId: string) {
+        try {
+            await this.profileModel.findOneAndDelete({ userId: userId });
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async updateProfileMetrics(userId: string, metric: ProfileMetric, count: number) {
-        const updateProfile = await this.findProfile(userId);
+        let updateProfile;
+        try {
+            updateProfile = await this.findProfile(userId);
+        } catch (error) {
+            console.error(error);
+            return;
+        }
+        if (!updateProfile) {
+            return;
+        }
         switch (metric) {
             case ProfileMetric.POST_COUNT: {
                 updateProfile.postCount = count;
@@ -83,4 +100,5 @@ export class ProfileService {
         }
         return profile;
     }
+
 }

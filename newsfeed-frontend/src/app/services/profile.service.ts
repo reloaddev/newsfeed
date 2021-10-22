@@ -29,6 +29,10 @@ export class ProfileService {
     this.socket.emit('profile:update', profile);
   }
 
+  deleteProfile(userId: string) {
+    this.socket.emit('profile:delete', userId);
+  }
+
   addCreateEventListener(): Observable<Profile> {
     return new Observable<Profile>(observer => {
       this.socket.on('profile:created', (profile: Profile) => {
@@ -58,7 +62,7 @@ export class ProfileService {
     return new Observable<{ [userId: string]: string }>(observer => {
       this.socket.on('profile:pictures', (
         pictureDictionary: { [userId: string]: string }) => {
-          observer.next(pictureDictionary);
+        observer.next(pictureDictionary);
       });
     })
   }

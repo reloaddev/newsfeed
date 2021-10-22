@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Profile } from "../../model/profile.model";
 import { ProfileService } from "../../services/profile.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ProfileCreationDialogComponent } from "./profile-creation-dialog/profile-creation-dialog.component";
 import { AuthService } from "../../services/auth.service";
 import { ProfileUpdateDialogComponent } from "./profile-update-dialog/profile-update-dialog.component";
+import { DeleteDialogComponent } from "../shared/delete-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   editEnabled = false;
 
   constructor(public dialog: MatDialog,
+              private router: Router,
               private route: ActivatedRoute,
               private profileService: ProfileService,
               private authService: AuthService) {
@@ -33,7 +35,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  openProfileCreator() {
+  openCreateDialog() {
     const dialogRef = this.dialog.open(ProfileCreationDialogComponent, {
       width: '70rem',
       height: '30rem'
@@ -45,7 +47,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  openProfileUpdater() {
+  openUpdateDialog() {
     const dialogRef = this.dialog.open(ProfileUpdateDialogComponent, {
       width: '70rem',
       height: '30rem',
@@ -58,6 +60,20 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  openDeleteDialog() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '21rem',
+      height: '9rem',
+      autoFocus: false,
+      data: { type: 'profile' }
+    });
+    dialogRef.afterClosed().subscribe(confirmation => {
+      if (confirmation && this.profile.userId) {
+        this.profileService.deleteProfile(this.profile.userId);
+      }
+    });
+  }
+
   private addEventListeners() {
     this.profileService.addCreateEventListener().subscribe(profile => {
       this.profile = profile;
@@ -65,10 +81,8 @@ export class ProfileComponent implements OnInit {
     this.profileService.addUpdateEventListener().subscribe(profile => {
       this.profile = profile;
     });
-    this.profileService.addNotFoundEventListener().subscribe(notFound => {
-      if (notFound && this.editEnabled) {
-        this.openProfileCreator();
-      }
+    this.profileService.addNotFoundEventListener().subscribe(() => {
+      this.router.navigateByUrl('/feed');
     });
   }
 }
