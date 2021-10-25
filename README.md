@@ -1,4 +1,4 @@
-# event-driven-newsfeed
+# event-driven news feed
 
 REQUIREMENTS
 - Node.js installed (https://nodejs.org/en/)
