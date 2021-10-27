@@ -4,7 +4,7 @@ import { FeedService } from "./feed.service";
 import { Post } from "./schemas/post.schema";
 import { io } from "socket.io-client";
 
-@WebSocketGateway(8081, { namespace: 'feed' })
+@WebSocketGateway(8081, { namespace: 'feed', cors: true })
 export class FeedGateway {
 
     constructor(private readonly feedService: FeedService) {

@@ -5,7 +5,7 @@ import { Profile } from "./schemas/profile.schema";
 import { ProfileMetric } from "./schemas/profile-metric.model";
 import { io } from "socket.io-client";
 
-@WebSocketGateway(8082, { namespace: 'profile' })
+@WebSocketGateway(8082, { namespace: 'profile', cors: true })
 export class ProfileGateway {
 
     constructor(private readonly profileService: ProfileService) {
