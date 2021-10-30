@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 export class AppComponent {
   title = 'newsfeed';
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private router: Router) {
   }
 

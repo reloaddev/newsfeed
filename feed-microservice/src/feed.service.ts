@@ -81,6 +81,19 @@ export class FeedService {
         return comments;
     }
 
+    async deleteCommentsByUserId(userId: string): Promise<Post[]> {
+        const posts = await this.getPosts();
+        const userComments = await this.getCommentsByUserId(userId);
+        const updatedPosts = [];
+        for(const post of posts) {
+            userComments.forEach(userComment => {
+                post.comments = post.comments.filter(postComment => postComment === userComment)
+            });
+            updatedPosts.push(await this.updatePost(post));
+        }
+        return updatedPosts;
+    }
+
     async getPost(id: string): Promise<PostDocument> {
         let post: PostDocument;
         try {

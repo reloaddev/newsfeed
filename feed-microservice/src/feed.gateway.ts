@@ -104,9 +104,12 @@ export class FeedGateway {
     @SubscribeMessage('feed:profile-deleted')
     async onProfileDeleted(@MessageBody() userId: string, @ConnectedSocket() client: Socket) {
         const posts = await this.feedService.getPostsByUserId(userId);
-        posts.forEach(post => {
-            this.onDeletePost(userId, post.id, client);
+        for (const post of posts) {
+            await this.onDeletePost(userId, post.id, client);
+        }
+        const updatedPosts = await this.feedService.deleteCommentsByUserId(userId);
+        updatedPosts.forEach(updatedPost => {
+            this.server.emit('post:updated', updatedPost);
         });
     }
-
 }
