@@ -20,11 +20,15 @@ INSTALLATION
   - go into working directory /feed-microservice
   - run "npm install" to install dependencies
   - run "npm run start" to start the microservice
+  - if terminal displays a mongoose error: try to connect via mobile network/hotspot 
+        (the error occurs because some router configurations do not allow to conncect the remote database, MongoDB Atlas)
 
 6) 3rd terminal session:
   - go into working directory /profile-microservice
   - run "npm install" to install dependencies
   - run "npm run start" to start the microservice
+  - if terminal displays a mongoose error: try to connect via mobile network/hotspot 
+        (the error occurs because some router configurations do not allow to conncect the remote database, MongoDB Atlas)
   
 7) Visit localhost:4200 to display the application
   - optional: open new tabs to simulate multiple clients
