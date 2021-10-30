@@ -41,3 +41,8 @@ CREDENTIALS
 SUPPORT
 If you have any troubles runnning the application,
 please contact henrik.pruess@posteo.de
+
+REFERENCE
+Pictures by
+https://dribbble.com/barnesdesign
+https://pixabay.com/users/geralt-9301/
