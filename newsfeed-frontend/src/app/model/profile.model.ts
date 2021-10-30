@@ -1,5 +1,4 @@
 export interface Profile {
-  name: string;
   userId: string;
   description: string;
   picture: string;

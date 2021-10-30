@@ -20,10 +20,10 @@ export class ProfileComponent implements OnInit {
   editEnabled = false;
 
   constructor(public dialog: MatDialog,
+              public authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private profileService: ProfileService,
-              private authService: AuthService) {
+              private profileService: ProfileService) {
   }
 
   ngOnInit(): void {

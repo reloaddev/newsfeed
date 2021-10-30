@@ -1,6 +1,6 @@
 <div class="profile-page">
   <div *ngIf="profile" class="profile">
-    <h1>Profile of {{ profile.name }}</h1>
+    <h1>Profile of {{ authService.loggedInUser?.username }}</h1>
     <div class="picture">
       <img src="{{ profile.picture }}"
            alt=""
@@ -23,9 +23,11 @@
     <button mat-raised-button (click)="openDeleteDialog()">Delete Profile</button>
   </div>
   <div *ngIf="!profile && this.editEnabled" class="profile">
+    <h1>No profile created yet</h1>
     <button mat-raised-button (click)="openCreateDialog()">Create Profile</button>
   </div>
   <div *ngIf="!profile && !this.editEnabled" class="profile">
-    <button mat-raised-button routerLink="../feed">Return to feed</button>
+    <h1>No profile created yet</h1>
+    <button mat-raised-button routerLink="../../feed">Return to feed</button>
   </div>
 </div>

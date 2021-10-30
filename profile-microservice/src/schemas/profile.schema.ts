@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export interface Profile {
-    name: string;
     userId: string;
     description: string;
     picture: string;
@@ -10,7 +9,6 @@ export interface Profile {
 }
 
 export const profileSchema = new mongoose.Schema({
-    name: { type: String, required: true },
     userId: { type: String, required: true },
     description: { type: String, required: false },
     picture: { type: String, required: true },

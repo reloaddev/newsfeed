@@ -1,12 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="submit(form)">
   <div mat-dialog-content class="update-fields">
-    <mat-form-field class="profile-name" appearance="fill">
-      <mat-label>Profile Name</mat-label>
-      <input
-        matInput
-        formControlName="name"
-        matNativeControl>
-    </mat-form-field>
     <mat-form-field>
       <mat-label>Profile Description</mat-label>
       <textarea

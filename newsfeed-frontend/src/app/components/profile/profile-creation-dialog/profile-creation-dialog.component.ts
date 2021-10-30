@@ -26,7 +26,6 @@ export class ProfileCreationDialogComponent implements OnInit {
   ngOnInit(): void {
     this.pictures = this.pictureService.getPictures();
     this.form = this.formBuilder.group({
-      name: '',
       description: '',
       picture: ''
     })
@@ -48,7 +47,6 @@ export class ProfileCreationDialogComponent implements OnInit {
       throw new Error('Cannot create profile without userId');
     }
     return {
-      name: data.name,
       userId: userId,
       description: data.description,
       picture: data.picture,

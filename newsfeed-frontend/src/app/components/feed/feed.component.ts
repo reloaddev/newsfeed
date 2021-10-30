@@ -138,6 +138,13 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getProfilePicture(userId: string) {
+    if (this.pictureDictionary[userId]?.length > 0) {
+      return this.pictureDictionary[userId];
+    }
+    return './assets/images/no-pic.jpg';
+  }
+
   private initializeFeed(posts: Post[]) {
     if (this.posts.length === 0) {
       this.posts.push(...posts);

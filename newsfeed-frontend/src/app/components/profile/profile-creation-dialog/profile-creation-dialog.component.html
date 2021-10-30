@@ -1,13 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <h1 mat-dialog-title>Profile Creator</h1>
   <div class="profile-input" mat-dialog-content>
-    <mat-form-field class="profile-name" appearance="fill">
-      <mat-label>Profile Name</mat-label>
-      <input
-        matInput
-        formControlName="name"
-        matNativeControl>
-    </mat-form-field>
     <mat-form-field>
       <mat-label>Profile Description</mat-label>
       <textarea

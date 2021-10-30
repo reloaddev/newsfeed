@@ -19,7 +19,6 @@ export class ProfileService {
 
     async createProfile(profileDraft: Profile): Promise<Profile> {
         const createdProfile = new this.profileModel({
-            name: profileDraft.name,
             userId: profileDraft.userId,
             description: profileDraft.description,
             picture: profileDraft.picture,
@@ -28,7 +27,6 @@ export class ProfileService {
         });
         await createdProfile.save();
         return {
-            name: createdProfile.name,
             userId: createdProfile.userId,
             description: createdProfile.description,
             picture: createdProfile.picture,
@@ -39,14 +37,12 @@ export class ProfileService {
 
     async updateProfile(profile: Profile): Promise<Profile> {
         const updateProfile = await this.findProfile(profile.userId);
-        updateProfile.name = profile.name;
         updateProfile.description = profile.description;
         updateProfile.picture = profile.picture;
         updateProfile.postCount = profile.postCount;
         updateProfile.commentCount = profile.commentCount;
         await updateProfile.save();
         return {
-            name: updateProfile.name,
             userId: updateProfile.userId,
             description: updateProfile.description,
             picture: updateProfile.picture,
