@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Profile } from "../../../model/profile.model";
 import { AuthService } from "../../../services/auth.service";
@@ -26,8 +26,8 @@ export class ProfileCreationDialogComponent implements OnInit {
   ngOnInit(): void {
     this.pictures = this.pictureService.getPictures();
     this.form = this.formBuilder.group({
-      description: '',
-      picture: ''
+      description: new FormControl('', [Validators.required]),
+      picture: new FormControl('', [Validators.required])
     })
   }
 
