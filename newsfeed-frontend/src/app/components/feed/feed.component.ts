@@ -25,6 +25,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
   @ViewChild('feedSection') feedSection!: ElementRef;
   lastRoute: string = '';
   lastPosition: string = '';
+  hasProfile: boolean = false;
 
   constructor(public dialog: MatDialog,
               private router: Router,
@@ -40,6 +41,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
       this.initializeFeed(posts);
     });
     this.addEventListeners();
+    this.addProfileCheckListener();
     this.enableScrollPositionRestoration();
   }
 
@@ -61,6 +63,18 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     this.profileService.addPictureEventListener().subscribe(pictureDictionary => {
       this.pictureDictionary = pictureDictionary;
+    });
+  }
+
+  addProfileCheckListener() {
+    this.profileService.loadProfile(this.authService.loggedInUser?.userId as string).subscribe(() => {
+      this.hasProfile = true;
+    });
+    this.profileService.addCreateEventListener().subscribe(() => {
+      this.hasProfile = true;
+    });
+    this.profileService.addNotFoundEventListener().subscribe(() => {
+      this.hasProfile = false;
     });
   }
 

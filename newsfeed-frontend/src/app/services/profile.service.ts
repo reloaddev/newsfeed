@@ -16,7 +16,9 @@ export class ProfileService {
         this.socket.emit('profile:get', userId);
       });
       this.socket.on('profile:loaded', (profile: Profile) => {
-        observer.next(profile);
+        if (profile) {
+          observer.next(profile);
+        }
       });
     });
   }
@@ -36,7 +38,9 @@ export class ProfileService {
   addCreateEventListener(): Observable<Profile> {
     return new Observable<Profile>(observer => {
       this.socket.on('profile:created', (profile: Profile) => {
-        observer.next(profile);
+        if (profile) {
+          observer.next(profile);
+        }
       });
     });
   }
@@ -44,7 +48,9 @@ export class ProfileService {
   addUpdateEventListener(): Observable<Profile> {
     return new Observable<Profile>(observer => {
       this.socket.on('profile:updated', (profile: Profile) => {
-        observer.next(profile);
+        if (profile) {
+          observer.next(profile);
+        }
       });
     });
   }

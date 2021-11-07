@@ -46,11 +46,16 @@
     </div>
   </div>
   <div class="spacer">
-    <button
-      class="open-dialog"
-      mat-raised-button
-      (click)="openCreateDialog()">Create New Post
-    </button>
+    <div
+      matTooltip="Create a profile before creating a post"
+      [matTooltipDisabled]="hasProfile">
+      <button
+        class="open-dialog"
+        mat-raised-button
+        [disabled]="!hasProfile"
+        (click)="openCreateDialog()">Create New Post
+      </button>
+    </div>
     <button
       mat-raised-button
       *ngIf="newPostsAvailable"
