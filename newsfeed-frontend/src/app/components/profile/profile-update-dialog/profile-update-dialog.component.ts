@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Profile } from "../../../model/profile.model";
 import { Picture } from "../../../model/picture.model";
 import { PictureService } from "../../../services/picture.service";
@@ -26,8 +26,8 @@ export class ProfileUpdateDialogComponent implements OnInit {
   ngOnInit(): void {
     this.pictures = this.pictureService.getPictures();
     this.form = this.formBuilder.group({
-      description: this.profile.description,
-      picture: this.profile.picture
+      description: new FormControl(this.profile.description, [Validators.required]),
+      picture: new FormControl(this.profile.picture, [Validators.required])
     });
   }
 

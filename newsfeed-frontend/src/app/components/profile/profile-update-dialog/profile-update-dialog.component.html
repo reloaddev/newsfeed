@@ -4,12 +4,13 @@
       <mat-label>Profile Description</mat-label>
       <textarea
         formControlName="description"
+        required
         matNativeControl>
       </textarea>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Profile Picture</mat-label>
-      <mat-select formControlName="picture">
+      <mat-select formControlName="picture" required>
         <mat-option *ngFor="let picture of pictures"
                     value="{{ picture.source }}">
           <img src="{{ picture.source }}"
@@ -20,11 +21,21 @@
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button [mat-dialog-close]="">
+    <button
+      mat-raised-button
+      [mat-dialog-close]="">
       Cancel
     </button>
-    <button mat-raised-button mat-dialog-close type="submit">
-      Update Profile
-    </button>
+    <div
+      matTooltip="Description and picture are mandatory for profile update"
+      [matTooltipDisabled]="!form.invalid">
+      <button
+        mat-raised-button
+        mat-dialog-close
+        [disabled]="form.invalid"
+        type="submit">
+        Update Profile
+      </button>
+    </div>
   </div>
 </form>
