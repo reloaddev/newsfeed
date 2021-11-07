@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Post } from "../../../model/post.model";
 
@@ -23,9 +23,11 @@ export class PostUpdateDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      postText: this.post.text
+      postText: new FormControl(this.post.text, [Validators.required])
     });
   }
+
+  get postText() { return this.form.get('postText') }
 
   submit() {
     const updatedText = this.form.value.postText;

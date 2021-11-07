@@ -129,7 +129,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
       data: post
     });
     dialogRef.afterClosed().subscribe((updatedText: string) => {
-      if (post.text !== updatedText) {
+      if (updatedText && post.text !== updatedText) {
         post.text = updatedText
         let userId = this.authService.loggedInUser?.userId;
         this.feedService.updatePost(userId as string, post);

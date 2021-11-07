@@ -9,6 +9,7 @@
         formControlName="postText"
         class="post-input-textarea"
         matNativeControl
+        required
         maxlength="300">
     </textarea>
       <div>
@@ -32,8 +33,7 @@
       mat-raised-button
       type="submit"
       [disabled]="form.invalid"
-      mat-dialog-close
-      cdkFocusInitial>
+      mat-dialog-close>
       Upload Post
     </button>
   </div>

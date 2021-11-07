@@ -9,6 +9,7 @@
         matNativeControl
         cdkTextareaAutosize
         cdkAutosizeMinRows="3"
+        required
         maxlength="300">
       </textarea>
       <div class="post-length-count">
@@ -16,11 +17,23 @@
       </div>
     </mat-form-field>
   </div>
+  <div *ngIf="postText?.invalid && (postText?.dirty || postText?.touched)"
+       class="alert alert-danger">
+    <div *ngIf="postText?.errors?.['required']">
+      Post text is required.
+    </div>
+  </div>
   <div mat-dialog-actions>
-    <button mat-raised-button [mat-dialog-close]="">
+    <button
+      mat-raised-button
+      [mat-dialog-close]="">
       Cancel
     </button>
-    <button mat-raised-button mat-dialog-close type="submit">
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="form.invalid"
+      mat-dialog-close>
       Update Post
     </button>
   </div>
