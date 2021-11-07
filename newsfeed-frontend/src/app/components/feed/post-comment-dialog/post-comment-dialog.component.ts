@@ -15,6 +15,7 @@ export class PostCommentDialogComponent implements OnInit {
 
   form!: FormGroup;
   post: Post;
+  hasProfile: boolean;
   comments: Comment[] = [];
   pictureDictionary: { [userId: string] : string } = {}
 
@@ -23,9 +24,10 @@ export class PostCommentDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private profileService: ProfileService,
-    @Inject(MAT_DIALOG_DATA) post: Post
+    @Inject(MAT_DIALOG_DATA) data: { post: Post, hasProfile: boolean }
   ) {
-    this.post = post;
+    this.post = data.post;
+    this.hasProfile = data.hasProfile;
   }
 
   ngOnInit() {

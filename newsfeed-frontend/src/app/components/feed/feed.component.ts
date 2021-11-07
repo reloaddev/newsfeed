@@ -112,7 +112,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(PostCommentDialogComponent, {
       width: '70rem',
       height: '50rem',
-      data: post
+      data: { post: post, hasProfile: this.hasProfile }
     });
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
       if (postWithComments) {

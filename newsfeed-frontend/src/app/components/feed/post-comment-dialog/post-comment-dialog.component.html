@@ -17,7 +17,11 @@
         <div class="comment-length-count">
           {{ commentTextarea.value.length }} / 300 Characters
         </div>
-        <button mat-raised-button type="button" class="add-comment" (click)="addComment(commentTextarea.value)">
+        <button
+          mat-raised-button
+          type="button"
+          class="add-comment"
+          (click)="addComment(commentTextarea.value)">
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -39,9 +43,21 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button [mat-dialog-close]="">Cancel</button>
-    <button mat-raised-button type="submit" mat-dialog-close cdkFocusInitial>
-      Upload Comment
+    <button
+      mat-raised-button
+      [mat-dialog-close]="">
+      Cancel
     </button>
+    <div matTooltip="Create a profile before commenting posts"
+         [matTooltipDisabled]="hasProfile">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="!hasProfile"
+        mat-dialog-close
+        cdkFocusInitial>
+        Upload Comment
+      </button>
+    </div>
   </div>
 </form>
