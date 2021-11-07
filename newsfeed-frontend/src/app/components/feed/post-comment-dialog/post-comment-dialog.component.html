@@ -10,6 +10,7 @@
       <textarea
         #commentTextarea
         formControlName="commentText"
+        required
         matNativeControl
         maxlength="300">
       </textarea>
@@ -20,12 +21,19 @@
         <button
           mat-raised-button
           type="button"
+          [disabled]="form.invalid"
           class="add-comment"
           (click)="addComment(commentTextarea.value)">
           <mat-icon>add</mat-icon>
         </button>
       </div>
     </mat-form-field>
+    <div *ngIf="commentText?.invalid && (commentText?.dirty || commentText?.touched)"
+         class="alert alert-danger">
+      <div *ngIf="commentText?.errors?.['required']">
+        Comment text is required.
+      </div>
+    </div>
     <div class="comments">
       <mat-card *ngFor="let comment of comments | dateSort">
         <mat-card-content class="comment">

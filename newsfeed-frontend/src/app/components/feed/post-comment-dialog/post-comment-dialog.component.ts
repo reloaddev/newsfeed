@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Post } from "../../../model/post.model";
 import { Comment } from "../../../model/comment.model";
@@ -35,10 +35,12 @@ export class PostCommentDialogComponent implements OnInit {
       this.pictureDictionary = pictureDictionary;
     }));
     this.form = this.formBuilder.group({
-      commentText: ''
+      commentText: new FormControl('', [Validators.required])
     });
     this.comments.push(...this.post.comments);
   }
+
+  get commentText() { return this.form.get('commentText'); }
 
   addComment(text: string) {
     const comment: Comment = {

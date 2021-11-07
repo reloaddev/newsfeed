@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from "@angular/material/dialog";
 import { Post } from "../../../model/post.model";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../../services/auth.service";
 
 @Component({
@@ -21,9 +21,11 @@ export class PostCreationDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      postText: ''
+      postText: new FormControl('', [Validators.required])
     })
   }
+
+  get postText() { return this.form.get('postText'); }
 
   submit() {
     let post;

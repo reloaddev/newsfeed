@@ -16,6 +16,12 @@
       </div>
     </mat-form-field>
   </div>
+  <div *ngIf="postText?.invalid && (postText?.dirty || postText?.touched)"
+       class="alert alert-danger">
+    <div *ngIf="postText?.errors?.['required']">
+      Post text is required.
+    </div>
+  </div>
   <div mat-dialog-actions>
     <button
       mat-raised-button
@@ -25,6 +31,7 @@
     <button
       mat-raised-button
       type="submit"
+      [disabled]="form.invalid"
       mat-dialog-close
       cdkFocusInitial>
       Upload Post

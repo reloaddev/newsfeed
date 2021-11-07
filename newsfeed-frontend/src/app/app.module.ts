@@ -28,6 +28,7 @@ import { ProfileUpdateDialogComponent } from './components/profile/profile-updat
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
         MatTabsModule,
         MatOptionModule,
         MatSelectModule,
-        MatTooltipModule
+        MatTooltipModule,
+        NgbModule
     ],
   providers: [
     DateSortPipe,
