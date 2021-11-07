@@ -47,10 +47,11 @@
   </div>
   <div class="spacer">
     <div
+      class="open-dialog"
       matTooltip="Create a profile before creating a post"
       [matTooltipDisabled]="hasProfile">
       <button
-        class="open-dialog"
+        class="open-dialog-button"
         mat-raised-button
         [disabled]="!hasProfile"
         (click)="openCreateDialog()">Create New Post

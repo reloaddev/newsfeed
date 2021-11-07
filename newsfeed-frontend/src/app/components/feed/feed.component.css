@@ -134,5 +134,10 @@
 
 .open-dialog {
   height: 3rem;
+  display: flex;
+}
+
+.open-dialog-button {
+  flex: 1;
 }
 
