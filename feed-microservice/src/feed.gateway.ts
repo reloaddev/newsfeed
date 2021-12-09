@@ -28,7 +28,7 @@ export class FeedGateway {
             newPost = await this.feedService.createPost(postDraft);
         } catch (error) {
             console.error(error);
-            client.emit('post:not-created'); // TODO client-side error handling
+            client.emit('post:not-created');
             return;
         }
         this.server.emit('post:created', newPost);
@@ -37,7 +37,7 @@ export class FeedGateway {
             posts = await this.feedService.getPostsByUserId(newPost.userId);
         } catch (error) {
             console.error(error);
-            client.emit('profile:metrics-not-updated'); // TODO client-side error handling
+            client.emit('profile:metrics-not-updated');
             return;
         }
         this.profileSocket.emit(
@@ -57,7 +57,7 @@ export class FeedGateway {
             updatedPost = await this.feedService.updatePost(post);
         } catch (error) {
             console.error(error);
-            client.emit('post:not-updated'); // TODO client-side error handling
+            client.emit('post:not-updated');
             return;
         }
         this.server.emit('post:updated', updatedPost);
@@ -78,14 +78,14 @@ export class FeedGateway {
             post = await this.feedService.getPost(postId);
         } catch (error) {
             console.error(error);
-            client.emit('post:not-found'); // TODO client-side error handling
+            client.emit('post:not-found');
             return;
         }
         try {
             await this.feedService.deletePost(postId);
         } catch (error) {
             console.error(error);
-            client.emit('post:not-deleted'); // TODO client-side error handling
+            client.emit('post:not-deleted');
             return;
         }
         this.server.emit('post:deleted', postId);
