@@ -1,8 +1,8 @@
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { Server, Socket } from "socket.io";
-import { FeedService } from "./feed.service";
-import { Post } from "./schemas/post.schema";
-import { io } from "socket.io-client";
+import {ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
+import {Server, Socket} from "socket.io";
+import {FeedService} from "./feed.service";
+import {Post} from "./schemas/post.schema";
+import {io} from "socket.io-client";
 
 @WebSocketGateway(8081, { namespace: 'feed', cors: true })
 export class FeedGateway {
@@ -94,11 +94,13 @@ export class FeedGateway {
             'profile:update-metrics',
             { userId: post.userId, metric: 'POST_COUNT', count: posts.length }
         );
-        const comments = await this.feedService.getCommentsByUserId(userId);
-        this.profileSocket.emit(
-            'profile:update-metrics',
-            { userId: userId, metric: 'COMMENT_COUNT', count: comments.length }
-        );
+        for (const cUserId of post.comments.map(comment => comment.userId)) {
+            const comments = await this.feedService.getCommentsByUserId(cUserId);
+            this.profileSocket.emit(
+                'profile:update-metrics',
+                { userId: cUserId, metric: 'COMMENT_COUNT', count: comments.length }
+            );
+        }
     }
 
     @SubscribeMessage('feed:profile-deleted')

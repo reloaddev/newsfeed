@@ -1,9 +1,9 @@
-import { ProfileService } from './profile.service';
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { Server, Socket } from "socket.io";
-import { Profile } from "./schemas/profile.schema";
-import { ProfileMetric } from "./schemas/profile-metric.model";
-import { io } from "socket.io-client";
+import {ProfileService} from './profile.service';
+import {ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
+import {Server, Socket} from "socket.io";
+import {Profile} from "./schemas/profile.schema";
+import {ProfileMetric} from "./schemas/profile-metric.model";
+import {io} from "socket.io-client";
 
 @WebSocketGateway(8082, { namespace: 'profile', cors: true })
 export class ProfileGateway {
@@ -23,7 +23,7 @@ export class ProfileGateway {
             profile = await this.profileService.getProfile(userId);
         } catch (error) {
             console.error(error);
-            client.emit('profile:not-found'); // TODO client-side error handling
+            client.emit('profile:not-found');
             return;
         }
         client.emit('profile:loaded', profile);
@@ -36,7 +36,7 @@ export class ProfileGateway {
             profile = await this.profileService.createProfile(profileDraft);
         } catch (error) {
             console.error(error);
-            client.emit('profile:not-created'); // TODO client-side error handling
+            client.emit('profile:not-created');
             return;
         }
         this.server.emit('profile:created', profile);
@@ -51,7 +51,7 @@ export class ProfileGateway {
             updatedProfile = await this.profileService.updateProfile(profile);
         } catch (error) {
             console.error(error);
-            client.emit('profile:not-updated'); // TODO client-side error handling
+            client.emit('profile:not-updated');
             return;
         }
         this.server.emit('profile:updated', updatedProfile);
@@ -65,7 +65,7 @@ export class ProfileGateway {
             await this.profileService.deleteProfile(userId);
         } catch (error) {
             console.error(error);
-            client.emit('profile:not-deleted', userId); // TODO client-side error handling
+            client.emit('profile:not-deleted', userId);
             return;
         }
         this.server.emit('profile:not-found', userId);
@@ -90,7 +90,7 @@ export class ProfileGateway {
             );
         } catch (error) {
             console.error(error);
-            client.emit('profile:not-updated'); // TODO client-side error handling
+            client.emit('profile:not-updated');
             return;
         }
         this.server.emit('profile:updated', updatedProfile);
