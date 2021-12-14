@@ -86,9 +86,7 @@ export class FeedService {
         const userComments = await this.getCommentsByUserId(userId);
         const updatedPosts = [];
         for (const post of posts) {
-            userComments.forEach(userComment => {
-                post.comments = post.comments.filter(postComment => postComment === userComment)
-            });
+            post.comments = post.comments.filter(postComment => !userComments.some(userComment => userComment.id === postComment.id));
             updatedPosts.push(await this.updatePost(post));
         }
         return updatedPosts;
