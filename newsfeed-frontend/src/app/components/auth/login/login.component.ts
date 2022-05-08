@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
 
@@ -19,17 +19,16 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: '',
-      password: ''
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     })
   }
 
   login() {
-    this.authService.login(this.form.value.username, this.form.value.password);
-    this.submitted = true;
-    if (this.authService.isLoggedIn) {
-      this.router.navigateByUrl('/feed');
-    }
+    console.log('here')
+    this.authService.login({email: this.form.value.username, password: this.form.value.password})
+      .then(() => this.router.navigate(['/feed']))
+      .catch((e) => console.log(e.message));
   }
 
 }

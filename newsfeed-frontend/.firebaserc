@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "newsfeed-fbfce"
+  },
+  "targets": {
+    "newsfeed-fbfce": {
+      "hosting": {
+        "newsfeed-frontend": [
+          "newsfeed-fbfce"
+        ]
+      }
+    }
+  }
+}

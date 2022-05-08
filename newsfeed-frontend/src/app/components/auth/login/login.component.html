@@ -1,3 +1,4 @@
+<h1>Login</h1>
 <form [formGroup]="form" (ngSubmit)="login()">
   <mat-form-field appearance="fill">
     <label>Username</label>
@@ -8,7 +9,5 @@
     <input matInput type="password" formControlName="password">
   </mat-form-field>
   <button mat-raised-button type="submit">Login</button>
-  <div *ngIf="!this.authService.isLoggedIn && submitted" class="alert alert-danger">
-    Login failed. Check Username/password combination.
-  </div>
+  <button mat-raised-button color="primary" type="submit">Register</button>
 </form>
