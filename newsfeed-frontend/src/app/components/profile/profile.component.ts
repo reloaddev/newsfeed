@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const userId = this.route.snapshot.paramMap.get('userId') as string;
-    this.editEnabled = userId === this.authService.loggedInUser?.userId;
+    // this.editEnabled = userId === this.authService.loggedInUser?.userId;
     this.addEventListeners();
     this.profileService.loadProfile(userId).subscribe(profile => {
       this.profile = profile

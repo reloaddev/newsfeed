@@ -19,8 +19,8 @@ export class AppComponent {
   }
 
   navToProfile() {
-    const userId = this.authService.loggedInUser?.userId;
-    this.router.navigateByUrl(`/profile/${userId}`);
+    // const userId = this.authService.loggedInUser?.userId;
+    // this.router.navigateByUrl(`/profile/${userId}`);
   }
 
   logout() {

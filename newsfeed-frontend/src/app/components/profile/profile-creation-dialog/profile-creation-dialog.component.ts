@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
-import { Profile } from "../../../model/profile.model";
 import { AuthService } from "../../../services/auth.service";
 import { PictureService } from "../../../services/picture.service";
 import { Picture } from "../../../model/picture.model";
@@ -34,25 +33,25 @@ export class ProfileCreationDialogComponent implements OnInit {
   submit() {
     let profile;
     try {
-      profile = this.createProfile(this.form.value);
+      // profile = this.createProfile(this.form.value);
     } catch (err) {
       return;
     }
     this.dialogRef.close(profile)
   }
 
-  createProfile(data: any): Profile {
-    const userId = this.authService.loggedInUser?.userId;
-    if (!userId) {
-      throw new Error('Cannot create profile without userId');
-    }
-    return {
-      userId: userId,
-      description: data.description,
-      picture: data.picture,
-      postCount: 0,
-      commentCount: 0
-    }
+  createProfile(data: any): void {
+    // const userId = this.authService.loggedInUser?.userId;
+    // if (!userId) {
+    //   throw new Error('Cannot create profile without userId');
+    // }
+    // return {
+    //   userId: userId,
+    //   description: data.description,
+    //   picture: data.picture,
+    //   postCount: 0,
+    //   commentCount: 0
+    // }
   }
 
 }

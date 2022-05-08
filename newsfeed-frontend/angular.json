@@ -101,6 +101,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "newsfeed-frontend:build:production",
+            "firebaseProject": "newsfeed-fbfce",
+            "firebaseHostingSite": "newsfeed-fbfce"
+          }
         }
       }
     }

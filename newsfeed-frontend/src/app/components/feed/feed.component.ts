@@ -67,9 +67,9 @@ export class FeedComponent implements OnInit, AfterViewInit {
   }
 
   addProfileCheckListener() {
-    this.profileService.loadProfile(this.authService.loggedInUser?.userId as string).subscribe(() => {
-      this.hasProfile = true;
-    });
+    // this.profileService.loadProfile(this.authService.loggedInUser?.userId as string).subscribe(() => {
+    //   this.hasProfile = true;
+    // });
     this.profileService.addCreateEventListener().subscribe(() => {
       this.hasProfile = true;
     });
@@ -92,9 +92,9 @@ export class FeedComponent implements OnInit, AfterViewInit {
     );
   }
 
-  isCurrentPostAuthor(post: Post): boolean {
-    return this.authService.loggedInUser?.userId === post.userId;
-  }
+  // isCurrentPostAuthor(post: Post): boolean {
+  //   // return this.authService.loggedInUser?.userId === post.userId;
+  // }
 
   openCreateDialog() {
     const dialogRef = this.dialog.open(PostCreationDialogComponent, {
@@ -116,8 +116,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
       if (postWithComments) {
-        let userId = this.authService.loggedInUser?.userId;
-        this.feedService.updatePost(userId as string, postWithComments);
+        // let userId = this.authService.loggedInUser?.userId;
+        // this.feedService.updatePost(userId as string, postWithComments);
       }
     });
   }
@@ -131,8 +131,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((updatedText: string) => {
       if (updatedText && post.text !== updatedText) {
         post.text = updatedText
-        let userId = this.authService.loggedInUser?.userId;
-        this.feedService.updatePost(userId as string, post);
+        // let userId = this.authService.loggedInUser?.userId;
+        // this.feedService.updatePost(userId as string, post);
       }
     });
   }
@@ -146,8 +146,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation && post.id) {
-        let userId = this.authService.loggedInUser?.userId;
-        this.feedService.deletePost(userId as string, post.id);
+        // let userId = this.authService.loggedInUser?.userId;
+        // this.feedService.deletePost(userId as string, post.id);
       }
     });
   }

@@ -44,7 +44,7 @@ export class PostCommentDialogComponent implements OnInit {
 
   addComment(text: string) {
     const comment: Comment = {
-      userId: this.authService.loggedInUser?.userId as string,
+      userId: '', // TODO add id
       text: text,
       date: new Date()
     }

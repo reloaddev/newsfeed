@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FeedComponent } from "./components/feed/feed.component";
 import { ProfileComponent } from "./components/profile/profile.component";
-import { AuthComponent } from "./components/auth/auth.component";
-import { AuthGuard } from "./components/auth/auth.guard";
+import { LoginComponent } from "./components/auth/login/login.component";
+import { AuthGuard } from "./components/auth/login/auth.guard";
 
 const routes: Routes = [
-  { path: '', component: AuthComponent },
-  { path: 'auth', component: AuthComponent },
+  { path: '', component: LoginComponent },
+  { path: 'auth', component: LoginComponent },
   {
     path: 'feed',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: FeedComponent
   },
   {
