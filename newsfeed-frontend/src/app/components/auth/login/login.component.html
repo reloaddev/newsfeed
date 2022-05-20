@@ -1,15 +1,17 @@
-<div fxLayout="column" fxFlex="50">
-  <h1>Login</h1>
-  <form [formGroup]="form" (ngSubmit)="login()">
-    <mat-form-field appearance="fill">
-      <label>Username</label>
-      <input matInput type="text" formControlName="username">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <label>Password</label>
-      <input matInput type="password" formControlName="password">
-    </mat-form-field>
-    <button mat-raised-button type="submit">Login</button>
-    <button mat-raised-button color="primary" type="submit">Register</button>
-  </form>
-</div>
+<form fxLayout="column" fxLayoutAlign="center" [formGroup]="form" (ngSubmit)="login()">
+  <mat-form-field>
+    <label>Email</label>
+    <input matInput type="text" formControlName="email">
+    <mat-error *ngIf="email?.errors?.['required']">Email required</mat-error>
+    <mat-error *ngIf="email?.errors?.['email']">Invalid email format</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <label>Password</label>
+    <input matInput type="password" formControlName="password">
+    <mat-error *ngIf="password?.errors?.['required']">Password required</mat-error>
+  </mat-form-field>
+  <div style="min-height: 10px"></div>
+  <button mat-raised-button color="primary" type="submit">Login</button>
+  <button mat-raised-button (click)="navigateToRegisterPage()">Register</button>
+  <mat-error *ngIf="form?.errors?.['loginFailed']">Login failed</mat-error>
+</form>

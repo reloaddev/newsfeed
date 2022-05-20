@@ -4,13 +4,15 @@ import { FeedComponent } from "./components/feed/feed.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 import { LoginComponent } from "./components/auth/login/login.component";
 import { AuthGuard } from "./components/auth/login/auth.guard";
+import { RegisterComponent } from './components/auth/register/register.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'auth', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: 'feed',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: FeedComponent
   },
   {

@@ -22,7 +22,6 @@ import {
   ProfileCreationDialogComponent
 } from './components/profile/profile-creation-dialog/profile-creation-dialog.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { CookieService } from "ngx-cookie-service";
 import { MatTabsModule } from "@angular/material/tabs";
 import { DeleteDialogComponent } from './components/shared/delete-dialog/delete-dialog.component';
 import { PostUpdateDialogComponent } from './components/feed/post-update-dialog/post-update-dialog.component';
@@ -37,6 +36,7 @@ import { environment } from '../environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { RegisterComponent } from './components/auth/register/register.component';
+import { FlexModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -57,6 +57,7 @@ import { RegisterComponent } from './components/auth/register/register.component
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
+        FlexModule,
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
@@ -76,7 +77,6 @@ import { RegisterComponent } from './components/auth/register/register.component
     ],
   providers: [
     DateSortPipe,
-    CookieService,
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
   ],
   bootstrap: [AppComponent]
