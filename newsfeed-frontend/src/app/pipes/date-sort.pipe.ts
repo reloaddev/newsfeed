@@ -10,6 +10,7 @@ export class DateSortPipe implements PipeTransform {
   transform(entries: Entry[] | undefined): Entry[] | undefined {
     if (entries) {
       entries = entries.sort((a, b) => {
+        if(a.date === undefined || b.date === undefined) return 0;
         if(a.date < b.date) return -1;
         if(a.date > b.date) return 1;
         return 0;

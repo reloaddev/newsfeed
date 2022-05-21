@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.login({
-      email: this.form.value.username,
+      email: this.form.value.email,
       password: this.form.value.password
     }).then(() => this.router.navigate(['/feed']))
       .catch(() => this.form.setErrors({loginFailed: true}));
