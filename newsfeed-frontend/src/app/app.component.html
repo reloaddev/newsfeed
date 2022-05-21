@@ -1,11 +1,8 @@
-<header routerLink="/feed">
-  <h1 class="title">The newsfeed</h1>
-</header>
-<nav mat-tab-nav-bar *ngIf="authService.loggedInUser">
-  <a mat-tab-link (click)="navToFeed()">Feed</a>
-  <a mat-tab-link (click)="navToProfile()">Profile</a>
-  <a mat-tab-link (click)="logout()">Logout</a>
-</nav>
-<div class="wrapper">
+<!--<nav mat-tab-nav-bar *ngIf="authService.loggedInUser">-->
+<!--  <a mat-tab-link (click)="navToFeed()">Feed</a>-->
+<!--  <a mat-tab-link (click)="navToProfile()">Profile</a>-->
+<!--  <a mat-tab-link (click)="logout()">Logout</a>-->
+<!--</nav>-->
+<div fxFill fxLayout="row" fxLayoutAlign="center center">
   <router-outlet></router-outlet>
 </div>

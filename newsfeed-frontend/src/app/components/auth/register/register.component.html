@@ -1,0 +1,24 @@
+<form fxLayout="column" [formGroup]="form" (ngSubmit)="register()">
+  <mat-form-field>
+    <label>Email</label>
+    <input matInput type="text" formControlName="email">
+    <mat-error *ngIf="email?.errors?.['required']">Email required</mat-error>
+    <mat-error *ngIf="email?.errors?.['email']">Invalid email format</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <label>Password</label>
+    <input matInput type="password" formControlName="password">
+    <mat-error *ngIf="password?.errors?.['required']">Password required</mat-error>
+    <mat-error *ngIf="password?.errors?.['minlength']">Minimum 6 characters</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <label>Repeat Password</label>
+    <input matInput type="password" formControlName="passwordRepeat" [errorStateMatcher]="errorStateMatcher">
+    <mat-error *ngIf="form?.errors?.['passwordsDontMatch'] && (form.touched || form.dirty)">
+      Passwords don't match
+    </mat-error>
+  </mat-form-field>
+  <div class="mt-1 mb-1"></div>
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+  <button mat-raised-button (click)="navigateToLoginPage()">Back</button>
+</form>

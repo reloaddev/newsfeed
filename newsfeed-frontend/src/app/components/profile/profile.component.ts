@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Profile } from "../../model/profile.model";
-import { ProfileService } from "../../services/profile.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ProfileCreationDialogComponent } from "./profile-creation-dialog/profile-creation-dialog.component";
 import { AuthService } from "../../services/auth.service";
@@ -12,7 +11,7 @@ import { DeleteDialogComponent } from "../shared/delete-dialog/delete-dialog.com
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  providers: [ProfileService]
+  // providers: [ProfileService]
 })
 export class ProfileComponent implements OnInit {
 
@@ -23,16 +22,17 @@ export class ProfileComponent implements OnInit {
               public authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private profileService: ProfileService) {
+              // private profileService: ProfileService
+  ) {
   }
 
   ngOnInit(): void {
     const userId = this.route.snapshot.paramMap.get('userId') as string;
-    this.editEnabled = userId === this.authService.loggedInUser?.userId;
+    // this.editEnabled = userId === this.authService.loggedInUser?.userId;
     this.addEventListeners();
-    this.profileService.loadProfile(userId).subscribe(profile => {
-      this.profile = profile
-    });
+    // this.profileService.loadProfile(userId).subscribe(profile => {
+    //   this.profile = profile
+    // });
   }
 
   openCreateDialog() {
@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((createdProfile: Profile) => {
       if (createdProfile) {
-        this.profileService.createProfile(createdProfile);
+        // this.profileService.createProfile(createdProfile);
       }
     });
   }
@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((updateProfile: Profile) => {
       if (updateProfile) {
-        this.profileService.updateProfile(updateProfile);
+        // this.profileService.updateProfile(updateProfile);
       }
     });
   }
@@ -69,20 +69,20 @@ export class ProfileComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation && this.profile.userId) {
-        this.profileService.deleteProfile(this.profile.userId);
+        // this.profileService.deleteProfile(this.profile.userId);
       }
     });
   }
 
   private addEventListeners() {
-    this.profileService.addCreateEventListener().subscribe(profile => {
-      this.profile = profile;
-    })
-    this.profileService.addUpdateEventListener().subscribe(profile => {
-      this.profile = profile;
-    });
-    this.profileService.addNotFoundEventListener().subscribe(() => {
-      this.router.navigateByUrl('/feed');
-    });
+    // this.profileService.addCreateEventListener().subscribe(profile => {
+    //   this.profile = profile;
+    // })
+    // this.profileService.addUpdateEventListener().subscribe(profile => {
+    //   this.profile = profile;
+    // });
+    // this.profileService.addNotFoundEventListener().subscribe(() => {
+    //   this.router.navigateByUrl('/feed');
+    // });
   }
 }

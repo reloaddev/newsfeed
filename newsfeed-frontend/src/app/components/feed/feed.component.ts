@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FeedService } from "../../services/feed.service";
 import { MatDialog } from "@angular/material/dialog";
 import { PostCreationDialogComponent } from "./post-creation-dialog/post-creation-dialog.component";
 import { Post } from "../../model/post.model";
@@ -8,7 +7,6 @@ import { DateSortPipe } from "../../pipes/date-sort.pipe";
 import { DeleteDialogComponent } from "../shared/delete-dialog/delete-dialog.component";
 import { AuthService } from "../../services/auth.service";
 import { PostUpdateDialogComponent } from "./post-update-dialog/post-update-dialog.component";
-import { ProfileService } from "../../services/profile.service";
 import { NavigationEnd, NavigationStart, Router } from "@angular/router";
 import { filter } from "rxjs/operators";
 
@@ -29,17 +27,17 @@ export class FeedComponent implements OnInit, AfterViewInit {
 
   constructor(public dialog: MatDialog,
               private router: Router,
-              private feedService: FeedService,
+              // private feedService: FeedService,
               private authService: AuthService,
-              private profileService: ProfileService,
+              // private profileService: ProfileService,
               private dateSort: DateSortPipe
   ) {
   }
 
   ngOnInit() {
-    this.feedService.initializeFeed().subscribe(posts => {
-      this.initializeFeed(posts);
-    });
+    // this.feedService.initializeFeed().subscribe(posts => {
+    //   this.initializeFeed(posts);
+    // });
     this.addEventListeners();
     this.addProfileCheckListener();
     this.enableScrollPositionRestoration();
@@ -52,30 +50,30 @@ export class FeedComponent implements OnInit, AfterViewInit {
   }
 
   addEventListeners() {
-    this.feedService.addCreateEventListener().subscribe(post => {
-      this.createPost(post);
-    });
-    this.feedService.addUpdateEventListener().subscribe(post => {
-      this.updatePost(post);
-    });
-    this.feedService.addDeleteEventListener().subscribe(postId => {
-      this.deletePost(postId);
-    });
-    this.profileService.addPictureEventListener().subscribe(pictureDictionary => {
-      this.pictureDictionary = pictureDictionary;
-    });
+    // this.feedService.addCreateEventListener().subscribe(post => {
+    //   this.createPost(post);
+    // });
+    // this.feedService.addUpdateEventListener().subscribe(post => {
+    //   this.updatePost(post);
+    // });
+    // this.feedService.addDeleteEventListener().subscribe(postId => {
+    //   this.deletePost(postId);
+    // });
+    // this.profileService.addPictureEventListener().subscribe(pictureDictionary => {
+    //   this.pictureDictionary = pictureDictionary;
+    // });
   }
 
   addProfileCheckListener() {
-    this.profileService.loadProfile(this.authService.loggedInUser?.userId as string).subscribe(() => {
-      this.hasProfile = true;
-    });
-    this.profileService.addCreateEventListener().subscribe(() => {
-      this.hasProfile = true;
-    });
-    this.profileService.addNotFoundEventListener().subscribe(() => {
-      this.hasProfile = false;
-    });
+    // this.profileService.loadProfile(this.authService.loggedInUser?.userId as string).subscribe(() => {
+    //   this.hasProfile = true;
+    // });
+    // this.profileService.addCreateEventListener().subscribe(() => {
+    //   this.hasProfile = true;
+    // });
+    // this.profileService.addNotFoundEventListener().subscribe(() => {
+    //   this.hasProfile = false;
+    // });
   }
 
   enableScrollPositionRestoration() {
@@ -92,9 +90,9 @@ export class FeedComponent implements OnInit, AfterViewInit {
     );
   }
 
-  isCurrentPostAuthor(post: Post): boolean {
-    return this.authService.loggedInUser?.userId === post.userId;
-  }
+  // isCurrentPostAuthor(post: Post): boolean {
+  //   // return this.authService.loggedInUser?.userId === post.userId;
+  // }
 
   openCreateDialog() {
     const dialogRef = this.dialog.open(PostCreationDialogComponent, {
@@ -103,7 +101,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((createdPost: Post) => {
       if (createdPost && createdPost.text.length > 0) {
-        this.feedService.createPost(createdPost);
+        // this.feedService.createPost(createdPost);
       }
     });
   }
@@ -116,8 +114,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((postWithComments: Post) => {
       if (postWithComments) {
-        let userId = this.authService.loggedInUser?.userId;
-        this.feedService.updatePost(userId as string, postWithComments);
+        // let userId = this.authService.loggedInUser?.userId;
+        // this.feedService.updatePost(userId as string, postWithComments);
       }
     });
   }
@@ -131,8 +129,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((updatedText: string) => {
       if (updatedText && post.text !== updatedText) {
         post.text = updatedText
-        let userId = this.authService.loggedInUser?.userId;
-        this.feedService.updatePost(userId as string, post);
+        // let userId = this.authService.loggedInUser?.userId;
+        // this.feedService.updatePost(userId as string, post);
       }
     });
   }
@@ -146,8 +144,8 @@ export class FeedComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation && post.id) {
-        let userId = this.authService.loggedInUser?.userId;
-        this.feedService.deletePost(userId as string, post.id);
+        // let userId = this.authService.loggedInUser?.userId;
+        // this.feedService.deletePost(userId as string, post.id);
       }
     });
   }

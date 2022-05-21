@@ -18,17 +18,25 @@ import { DateSortPipe } from './pipes/date-sort.pipe';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RouteReuseStrategy } from "@angular/router";
 import { CustomReuseStrategy } from "./reuse-strategy";
-import { ProfileCreationDialogComponent } from './components/profile/profile-creation-dialog/profile-creation-dialog.component';
-import { AuthComponent } from './components/auth/auth.component';
-import { CookieService } from "ngx-cookie-service";
+import {
+  ProfileCreationDialogComponent
+} from './components/profile/profile-creation-dialog/profile-creation-dialog.component';
+import { LoginComponent } from './components/auth/login/login.component';
 import { MatTabsModule } from "@angular/material/tabs";
 import { DeleteDialogComponent } from './components/shared/delete-dialog/delete-dialog.component';
 import { PostUpdateDialogComponent } from './components/feed/post-update-dialog/post-update-dialog.component';
-import { ProfileUpdateDialogComponent } from './components/profile/profile-update-dialog/profile-update-dialog.component';
+import {
+  ProfileUpdateDialogComponent
+} from './components/profile/profile-update-dialog/profile-update-dialog.component';
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { FlexModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -39,15 +47,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DateSortPipe,
     ProfileComponent,
     ProfileCreationDialogComponent,
-    AuthComponent,
+    LoginComponent,
     DeleteDialogComponent,
     PostUpdateDialogComponent,
-    ProfileUpdateDialogComponent
+    ProfileUpdateDialogComponent,
+    RegisterComponent
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
+        FlexModule,
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
@@ -61,11 +71,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         MatOptionModule,
         MatSelectModule,
         MatTooltipModule,
-        NgbModule
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideDatabase(() => getDatabase())
     ],
   providers: [
     DateSortPipe,
-    CookieService,
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
   ],
   bootstrap: [AppComponent]

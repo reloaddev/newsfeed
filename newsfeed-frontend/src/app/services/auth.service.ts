@@ -1,40 +1,24 @@
 import { Injectable } from '@angular/core';
-import { AuthStore } from "../stores/auth.store";
-import { User } from "../model/user.model";
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { LoginData } from '../model/login-data.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
-  isLoggedIn = false;
-  loggedInUser: User | null = null;
-  redirectUrl: string | null = null;
-
-  constructor(private authStore: AuthStore) {
-    this.onInit()
+  constructor(private auth: Auth) {
   }
 
-  private onInit() {
+  login({email, password}: LoginData) {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  login(username: string, password: string) {
-    let user;
-    try {
-      user = this.authStore.findUserByName(username);
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-    if (!(user.password === password)) {
-      return;
-    }
-    this.isLoggedIn = true;
-    this.loggedInUser = user;
+  register({ email, password }: LoginData) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  logout(): void {
-    this.isLoggedIn = false;
-    this.loggedInUser = null;
+  logout() {
+    return signOut(this.auth);
   }
 }
