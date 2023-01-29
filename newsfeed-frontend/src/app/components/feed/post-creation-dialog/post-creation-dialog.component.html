@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h1 mat-dialog-title>What's up?</h1>
+  <div class="post-input-area" mat-dialog-content>
+    <p>Tell the world...</p>
+    <mat-form-field class="post-input-field" appearance="fill">
+      <mat-label>New post</mat-label>
+      <textarea
+        #postInputTextarea
+        formControlName="postText"
+        class="post-input-textarea"
+        matNativeControl
+        required
+        maxlength="300">
+    </textarea>
+      <div>
+        {{ postInputTextarea.value.length }} / 300 characters
+      </div>
+    </mat-form-field>
+  </div>
+  <div *ngIf="postText?.invalid && (postText?.dirty || postText?.touched)"
+       class="alert alert-danger">
+    <div *ngIf="postText?.errors?.['required']">
+      Post text is required.
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="form.invalid"
+      mat-dialog-close>
+      Upload Post
+    </button>
+  </div>
+</form>
+

@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h1 mat-dialog-title>Profile Creator</h1>
+  <div class="profile-input" mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Profile Description</mat-label>
+      <textarea
+        formControlName="description"
+        class="description"
+        required
+        matNativeControl>
+      </textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Profile Picture</mat-label>
+      <mat-select formControlName="picture" required>
+        <mat-option *ngFor="let picture of pictures"
+                    value="{{ picture.source }}">
+          <img src="{{ picture.source }}"
+               alt="" width="30" height="30">
+          {{ picture.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-raised-button
+      type="button"
+      [mat-dialog-close]="">
+      Cancel
+    </button>
+    <div
+      matTooltip="Description and picture are mandatory for profile creation"
+      [matTooltipDisabled]="!form.invalid">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="form.invalid"
+        mat-dialog-close
+        cdkFocusInitial>
+        Create Profile
+      </button>
+    </div>
+  </div>
+</form>

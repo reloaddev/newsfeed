@@ -1,0 +1,143 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.app-feed {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-around;
+  flex: 1;
+}
+
+.feed-section {
+  flex: 6;
+  text-align: center;
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: minmax(60px, 0.6fr)
+                         minmax(60px, 0.6fr)
+                         minmax(10px, 0.4fr)
+                         minmax(10px, 0.25fr)
+                         minmax(500px, 10fr)
+                         minmax(10px, 0.25fr)
+                         minmax(120px, 1.5fr);
+  grid-template-rows: 1fr 1fr 1fr 4fr 1fr 2fr;
+  grid-template-areas:
+    "top1  .     .  .     .     .  top6"
+    "top1  .     .  .     .     .  top6"
+    "top1  .     .  .     .     .  top6"
+    ".     .     .  mid4  mid4  .  .   "
+    "bot1  bot1  .  mid4  mid4  .  bot6"
+    "bot1  bot1  .  .     .     .  bot6";
+  box-sizing: border-box;
+  width: 100%;
+  height: 12rem;
+  margin: 0 0 5px 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  grid-area: top1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.user > img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+}
+
+.post-text {
+  grid-area: mid4;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  font-size: 1rem;
+  text-align: left;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.timestamp {
+  grid-area: top6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 0;
+  background-color: #3f51b5;
+  color: white;
+}
+
+.comment-area {
+  grid-area: bot1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.comment-button {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.comment-count {
+  flex: 1;
+  min-width: fit-content;
+  color: #3f51b5!important;
+  border-color: #0000001E;
+}
+
+.action-area {
+  grid-area: bot6;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.delete {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.update {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.spacer {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: lightgrey;
+}
+
+.open-dialog {
+  height: 3rem;
+  display: flex;
+}
+
+.open-dialog-button {
+  flex: 1;
+}
+

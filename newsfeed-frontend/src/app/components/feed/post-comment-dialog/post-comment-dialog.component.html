@@ -1,0 +1,71 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div mat-dialog-content>
+    <mat-card class="post">
+      <mat-card-content class="mat-body-1">
+        {{ post.text }}
+      </mat-card-content>
+    </mat-card>
+    <mat-form-field class="comment-field" appearance="fill">
+      <mat-label>New Comment</mat-label>
+      <textarea
+        #commentTextarea
+        formControlName="commentText"
+        required
+        matNativeControl
+        maxlength="300">
+      </textarea>
+      <div class="comment-info">
+        <div class="comment-length-count">
+          {{ commentTextarea.value.length }} / 300 Characters
+        </div>
+        <button
+          mat-raised-button
+          type="button"
+          [disabled]="form.invalid"
+          class="add-comment"
+          (click)="addComment(commentTextarea.value)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </mat-form-field>
+    <div *ngIf="commentText?.invalid && (commentText?.dirty || commentText?.touched)"
+         class="alert alert-danger">
+      <div *ngIf="commentText?.errors?.['required']">
+        Comment text is required.
+      </div>
+    </div>
+    <div class="comments">
+      <mat-card *ngFor="let comment of comments | dateSort">
+        <mat-card-content class="comment">
+          <div class="comment-author">
+            <img
+              src="{{ pictureDictionary[comment.userId] }}"
+              alt=""
+              width="50"
+              height="50">
+          </div>
+          <div class="comment-text">{{ comment.text }}</div>
+          <div class="comment-date">{{ comment.date | date: 'dd/MM/yyyy hh:mm:ss' }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-raised-button
+      [mat-dialog-close]="">
+      Cancel
+    </button>
+    <div matTooltip="Create a profile before commenting posts"
+         [matTooltipDisabled]="hasProfile">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="!hasProfile"
+        mat-dialog-close
+        cdkFocusInitial>
+        Upload Comment
+      </button>
+    </div>
+  </div>
+</form>

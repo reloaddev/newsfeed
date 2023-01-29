@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.profile-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.spacer {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: lightgrey;
+}
+
+.profile {
+  flex: 6;
+  padding: 1.5rem
+}
+
+.picture {
+  margin: .5rem;
+}
+
+img {
+  border-radius: 50%;
+}
+
+.description {
+  margin: .5rem
+}
+
+.post-count {
+  margin: .5rem
+}
+
+.comment-count {
+  margin: .5rem
+}

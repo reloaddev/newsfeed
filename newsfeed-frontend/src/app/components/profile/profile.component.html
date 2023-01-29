@@ -1,0 +1,33 @@
+<div class="profile-page">
+  <div *ngIf="profile" class="profile">
+<!--    <h1>Profile of {{ authService.loggedInUser?.username }}</h1>-->
+    <div class="picture">
+      <img src="{{ profile.picture }}"
+           alt=""
+           width="200"
+           height="200">
+    </div>
+    <div class="description">
+      <mat-card>{{ profile.description }}</mat-card>
+    </div>
+    <div class="post-count">
+      <mat-card>{{ profile.postCount }} Post(s)</mat-card>
+    </div>
+    <div class="comment-count">
+      <mat-card>{{ profile.commentCount }} Comment(s)</mat-card>
+    </div>
+    <div *ngIf="!profile && !this.editEnabled" class="profile">Missing profile</div>
+  </div>
+  <div *ngIf="profile && this.editEnabled" class="profile">
+    <button mat-raised-button (click)="openUpdateDialog()">Edit Profile</button>
+    <button mat-raised-button (click)="openDeleteDialog()">Delete Profile</button>
+  </div>
+  <div *ngIf="!profile && this.editEnabled" class="profile">
+    <h1>No profile created yet</h1>
+    <button mat-raised-button (click)="openCreateDialog()">Create Profile</button>
+  </div>
+  <div *ngIf="!profile && !this.editEnabled" class="profile">
+    <h1>No profile created yet</h1>
+    <button mat-raised-button routerLink="../../feed">Return to feed</button>
+  </div>
+</div>
